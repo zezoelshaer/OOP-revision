@@ -278,7 +278,8 @@
     text-align: right;
   }
   .mcq-opt:hover { border-color: var(--accent); color: var(--accent); }
-  .mcq-opt.correct { border-color: #7ee787; background: rgba(126,231,135,0.1); color: #7ee787; }
+  .mcq-opt.correct { border-color: var(--border); background: var(--bg2); color: var(--text); }
+  .mcq-item.answered .mcq-opt.correct { border-color: #7ee787; background: rgba(126,231,135,0.1); color: #7ee787; }
   .mcq-opt.wrong { border-color: #ff7b72; background: rgba(255,123,114,0.1); color: #ff7b72; }
   .mcq-answer {
     margin-top: 10px;
@@ -301,8 +302,12 @@
     margin-top: 10px;
     font-family: 'Cairo', sans-serif;
     transition: all 0.2s;
+    display: inline-block;
   }
   .show-answer-btn:hover { background: var(--accent); color: #000; }
+  .q-item .show-answer-btn { border-color: var(--accent4); color: var(--accent4); margin-top: 10px; }
+  .q-item .show-answer-btn:hover { background: var(--accent4); color: #000; }
+  .q-item .mcq-answer { border-right-color: var(--accent4); color: var(--text); background: rgba(255,166,87,0.06); }
 
   /* CODE QUESTION */
   .code-q-item {
@@ -475,15 +480,23 @@
         <ul class="q-list">
           <li class="q-item">
             <div class="q-header"><span class="q-num">1</span><span class="q-text">ما المقصود بـ Programming Paradigm؟ وما الفرق بين البرمجة الإجرائية وبرمجة OOP؟</span></div>
+            <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+            <div class="mcq-answer">✅ <strong>Programming Paradigm</strong> = أسلوب تفكير في كتابة البرامج.<br>• <strong>Procedural</strong>: تكتب تعليمات خطوة بخطوة من فوق لتحت (top-down) — البيانات والوظائف منفصلة.<br>• <strong>OOP</strong>: البرنامج مجموعة objects تحمل بيانات وعمليات وتتفاعل مع بعض — الكود أكثر تنظيماً وإعادة استخدام.</div>
           </li>
           <li class="q-item">
             <div class="q-header"><span class="q-num">2</span><span class="q-text">ما هو الـ Object؟ اذكر مثالاً من الحياة اليومية مع تحديد البيانات والعمليات.</span></div>
+            <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+            <div class="mcq-answer">✅ <strong>Object</strong> = وحدة في البرنامج تجمع بيانات وعمليات مع بعض.<br>مثال — سيارة:<br>• <strong>البيانات (Data):</strong> اللون، الموديل، السنة، السرعة الحالية<br>• <strong>العمليات (Operations):</strong> تشغيل()، وقف()، تسريع()، كبح()</div>
           </li>
           <li class="q-item">
             <div class="q-header"><span class="q-num">3</span><span class="q-text">ما الفرق بين الـ Class والـ Object؟ وما معنى "Instance of a class"؟</span></div>
+            <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+            <div class="mcq-answer">✅ <strong>Class</strong> = المخطط التصميمي (Blueprint) — بيحدد شكل وسلوك الـ objects بس ما بينفذش بنفسه.<br><strong>Object</strong> = النسخة الحقيقية (Instance) المُنشأة من الـ class.<br><strong>"Instance of a class"</strong> = يعني object تم إنشاؤه من class معين. مثال: s1 = new Student() → s1 هو instance من Student.</div>
           </li>
           <li class="q-item">
             <div class="q-header"><span class="q-num">4</span><span class="q-text">لو بتصمم برنامج لإدارة مكتبة، اذكر 4 objects مختلفة مع بياناتها وعملياتها.</span></div>
+            <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+            <div class="mcq-answer">✅ <strong>1. Book:</strong> بيانات: title, author, isbn, isAvailable — عمليات: borrow(), returnBook(), display()<br><strong>2. Member:</strong> بيانات: name, id, phone — عمليات: register(), borrowBook(), returnBook()<br><strong>3. Librarian:</strong> بيانات: name, employeeId — عمليات: addBook(), removeBook(), searchBook()<br><strong>4. Library:</strong> بيانات: name, address, openingHours — عمليات: searchByTitle(), listAvailableBooks()</div>
           </li>
         </ul>
       </div>
@@ -641,10 +654,22 @@ System.out.<span class="method">println</span>(<span class="str">"Area: "</span>
       <div class="section">
         <div class="section-title theory">✍️ أسئلة نظرية</div>
         <ul class="q-list">
-          <li class="q-item"><div class="q-header"><span class="q-num">1</span><span class="q-text">ما الفرق بين <code>public</code> و <code>private</code> كـ access modifiers؟ ولماذا نفضل جعل الـ fields خاصة (private)؟</span></div></li>
-          <li class="q-item"><div class="q-header"><span class="q-num">2</span><span class="q-text">ما المقصود بـ Data Hiding؟ ولماذا هو مهم في برمجة OOP؟</span></div></li>
-          <li class="q-item"><div class="q-header"><span class="q-num">3</span><span class="q-text">ما الفرق بين الـ Getter والـ Setter؟ أعطِ مثالاً لكل منهما.</span></div></li>
-          <li class="q-item"><div class="q-header"><span class="q-num">4</span><span class="q-text">ما هي الـ Instance Fields والـ Instance Methods؟ لماذا تحتاج لإنشاء Object لاستخدامها؟</span></div></li>
+          <li class="q-item"><div class="q-header"><span class="q-num">1</span><span class="q-text">ما الفرق بين <code>public</code> و <code>private</code> كـ access modifiers؟ ولماذا نفضل جعل الـ fields خاصة (private)؟</span></div>
+            <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+            <div class="mcq-answer">✅ <strong>public</strong>: يوصله أي كود من أي مكان في البرنامج.<br><strong>private</strong>: يوصله بس methods جوه نفس الـ class بالظبط.<br>نفضل private لأن: (1) نحمي البيانات من التعديل الخاطئ، (2) نتحكم في آلية الوصول عبر getters/setters، (3) نسهل التعديل المستقبلي بدون تأثير على باقي الكود.</div>
+          </li>
+          <li class="q-item"><div class="q-header"><span class="q-num">2</span><span class="q-text">ما المقصود بـ Data Hiding؟ ولماذا هو مهم في برمجة OOP؟</span></div>
+            <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+            <div class="mcq-answer">✅ <strong>Data Hiding</strong> = إخفاء التفاصيل الداخلية للـ class عن باقي البرنامج بجعل الـ fields كلها private وتوفير public methods للوصول إليها.<br>أهميته: (1) يمنع التعديل الخاطئ للبيانات، (2) يسمح بالتحقق من صحة القيم في الـ setters، (3) يجعل الكود أكثر أماناً وصيانةً.</div>
+          </li>
+          <li class="q-item"><div class="q-header"><span class="q-num">3</span><span class="q-text">ما الفرق بين الـ Getter والـ Setter؟ أعطِ مثالاً لكل منهما.</span></div>
+            <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+            <div class="mcq-answer">✅ <strong>Getter (Accessor)</strong>: method تبدأ بـ get وترجع قيمة الـ private field — لا تعدلها.<br>مثال: public double getBalance() { return balance; }<br><strong>Setter (Mutator)</strong>: method تبدأ بـ set وتعدل قيمة الـ private field — ممكن تضيف تحقق من صحة القيمة.<br>مثال: public void setBalance(double b) { if(b >= 0) balance = b; }</div>
+          </li>
+          <li class="q-item"><div class="q-header"><span class="q-num">4</span><span class="q-text">ما هي الـ Instance Fields والـ Instance Methods؟ لماذا تحتاج لإنشاء Object لاستخدامها؟</span></div>
+            <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+            <div class="mcq-answer">✅ <strong>Instance Fields</strong>: متغيرات معرفة داخل الـ class بدون static — كل object عنده نسخته الخاصة منها (مثال: name, age).<br><strong>Instance Methods</strong>: methods بتشتغل على بيانات الـ object وبتوصل لـ instance fields.<br>لازم تعمل object لأن كل object له بياناته المختلفة — ما فيش "بيانات مشتركة" مثل static.</div>
+          </li>
         </ul>
       </div>
 
@@ -828,11 +853,26 @@ System.out.<span class="method">println</span>(<span class="cls">Counter</span>.
       <div class="section">
         <div class="section-title theory">✍️ أسئلة نظرية</div>
         <ul class="q-list">
-          <li class="q-item"><div class="q-header"><span class="q-num">1</span><span class="q-text">ما هو الـ Constructor؟ اذكر 4 خصائص تميزه عن الـ methods العادية.</span></div></li>
-          <li class="q-item"><div class="q-header"><span class="q-num">2</span><span class="q-text">ما هو الـ Default Constructor؟ متى تتوفره Java تلقائياً ومتى لا؟</span></div></li>
-          <li class="q-item"><div class="q-header"><span class="q-num">3</span><span class="q-text">ما المقصود بـ Method Overloading؟ وما الفرق بينه وبين Method Overriding؟</span></div></li>
-          <li class="q-item"><div class="q-header"><span class="q-num">4</span><span class="q-text">ما الفرق بين الـ Static field والـ Instance field؟ أعطِ مثالاً توضيحياً.</span></div></li>
-          <li class="q-item"><div class="q-header"><span class="q-num">5</span><span class="q-text">ما الفرق بين الـ Reference copy والـ Deep copy؟ ولماذا نستخدم Copy Constructor؟</span></div></li>
+          <li class="q-item"><div class="q-header"><span class="q-num">1</span><span class="q-text">ما هو الـ Constructor؟ اذكر 4 خصائص تميزه عن الـ methods العادية.</span></div>
+            <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+            <div class="mcq-answer">✅ <strong>Constructor</strong> = method خاصة بتتنادى تلقائياً عند إنشاء object.<br>4 خصائص تميزه:<br>(1) نفس اسم الـ class بالظبط<br>(2) لا يوجد له return type (حتى void مش موجود)<br>(3) بيتنادى تلقائياً بالكلمة new<br>(4) ممكن يكون متعدد (Overloading) بـ parameters مختلفة</div>
+          </li>
+          <li class="q-item"><div class="q-header"><span class="q-num">2</span><span class="q-text">ما هو الـ Default Constructor؟ متى تتوفره Java تلقائياً ومتى لا؟</span></div>
+            <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+            <div class="mcq-answer">✅ <strong>Default Constructor</strong> = no-arg constructor بدون parameters بيضع قيم افتراضية (0, null, false).<br>• <strong>Java بتوفره تلقائياً</strong>: لما ما تكتبش أي constructor في الـ class.<br>• <strong>Java لا تتوفره</strong>: لو كتبت constructor واحد على الأقل — حينها لازم تكتب الـ no-arg بنفسك لو محتاجه.</div>
+          </li>
+          <li class="q-item"><div class="q-header"><span class="q-num">3</span><span class="q-text">ما المقصود بـ Method Overloading؟ وما الفرق بينه وبين Method Overriding؟</span></div>
+            <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+            <div class="mcq-answer">✅ <strong>Method Overloading</strong>: نفس الاسم في نفس الـ class لكن بـ parameters مختلفة (عدد أو نوع) — Java تعرف تنادي أنهي نسخة حسب الـ arguments. بيتحل في compile time.<br><strong>Method Overriding</strong>: الـ subclass تعيد كتابة method من الـ superclass بنفس الـ signature تماماً. بيتحل في runtime.</div>
+          </li>
+          <li class="q-item"><div class="q-header"><span class="q-num">4</span><span class="q-text">ما الفرق بين الـ Static field والـ Instance field؟ أعطِ مثالاً توضيحياً.</span></div>
+            <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+            <div class="mcq-answer">✅ <strong>Static field</strong>: مشترك بين كل الـ objects — نسخة واحدة في الذاكرة لكل الـ class. يُنادى باسم الـ class: Counter.count<br><strong>Instance field</strong>: كل object عنده نسخته الخاصة — قيمه مختلفة لكل object. يُنادى باسم الـ object: student.name<br>مثال: static int count (عداد الطلاب الكلي) مقابل String name (اسم كل طالب).</div>
+          </li>
+          <li class="q-item"><div class="q-header"><span class="q-num">5</span><span class="q-text">ما الفرق بين الـ Reference copy والـ Deep copy؟ ولماذا نستخدم Copy Constructor؟</span></div>
+            <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+            <div class="mcq-answer">✅ <strong>Reference copy</strong> (Rectangle r2 = r1): الاتنين بيشيروا لنفس الـ object في الذاكرة — تعديل r2 يأثر على r1 وبالعكس!<br><strong>Deep copy</strong> (Rectangle r2 = new Rectangle(r1)): نسخة مستقلة جديدة تماماً في الذاكرة — تعديل r2 لا يأثر على r1.<br>نستخدم Copy Constructor عشان نعمل نسخة مستقلة آمنة من الـ object.</div>
+          </li>
         </ul>
       </div>
 
@@ -1030,11 +1070,26 @@ emp.<span class="method">display</span>();</pre>
       <div class="section">
         <div class="section-title theory">✍️ أسئلة نظرية</div>
         <ul class="q-list">
-          <li class="q-item"><div class="q-header"><span class="q-num">1</span><span class="q-text">ما المقصود بعلاقة "is a" في الوراثة؟ أعطِ 3 أمثلة.</span></div></li>
-          <li class="q-item"><div class="q-header"><span class="q-num">2</span><span class="q-text">ما دور الكلمة المفتاحية <code>super</code> في الوراثة؟ اذكر استخدامين لها.</span></div></li>
-          <li class="q-item"><div class="q-header"><span class="q-num">3</span><span class="q-text">ما الفرق بين Method Overriding وMethod Overloading؟</span></div></li>
-          <li class="q-item"><div class="q-header"><span class="q-num">4</span><span class="q-text">ما الفرق بين private وprotected من حيث الوصول في الوراثة؟</span></div></li>
-          <li class="q-item"><div class="q-header"><span class="q-num">5</span><span class="q-text">ما تأثير الكلمة المفتاحية <code>final</code> على الـ method؟</span></div></li>
+          <li class="q-item"><div class="q-header"><span class="q-num">1</span><span class="q-text">ما المقصود بعلاقة "is a" في الوراثة؟ أعطِ 3 أمثلة.</span></div>
+            <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+            <div class="mcq-answer">✅ علاقة "is a" تعني أن الـ subclass هو نوع من الـ superclass — يعني الـ subclass يرث كل خصائص وسلوك الـ superclass.<br>أمثلة:<br>• Employee "is a" Person → الموظف هو شخص<br>• Dog "is a" Animal → الكلب هو حيوان<br>• Circle "is a" Shape → الدائرة هي شكل هندسي</div>
+          </li>
+          <li class="q-item"><div class="q-header"><span class="q-num">2</span><span class="q-text">ما دور الكلمة المفتاحية <code>super</code> في الوراثة؟ اذكر استخدامين لها.</span></div>
+            <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+            <div class="mcq-answer">✅ <strong>super</strong> = كلمة مفتاحية بتُشير للـ superclass.<br>(1) <strong>super(args)</strong>: ينادي constructor الـ superclass — لازم تكون أول سطر في الـ subclass constructor. مثال: super("Ahmed", 30);<br>(2) <strong>super.methodName()</strong>: ينادي نسخة الـ method من الـ superclass من جوه الـ subclass. مثال: super.display();</div>
+          </li>
+          <li class="q-item"><div class="q-header"><span class="q-num">3</span><span class="q-text">ما الفرق بين Method Overriding وMethod Overloading؟</span></div>
+            <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+            <div class="mcq-answer">✅ <strong>Method Overriding</strong>: الـ subclass تعيد كتابة method من الـ superclass بنفس الاسم ونفس الـ parameters تماماً (@Override). بيتحقق في Runtime (Dynamic Binding).<br><strong>Method Overloading</strong>: نفس الـ class يعرف methods بنفس الاسم لكن parameters مختلفة في العدد أو النوع. بيتحقق في Compile Time (Static Binding).</div>
+          </li>
+          <li class="q-item"><div class="q-header"><span class="q-num">4</span><span class="q-text">ما الفرق بين private وprotected من حيث الوصول في الوراثة؟</span></div>
+            <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+            <div class="mcq-answer">✅ <strong>private</strong>: يوصله بس نفس الـ class اللي عرّفه — الـ subclass لا تستطيع الوصول المباشر، لازم تستخدم public getters/setters.<br><strong>protected</strong>: يوصله نفس الـ class + كل الـ subclasses + كل الـ classes في نفس الـ package.<br>في الوراثة، الـ protected أنسب لأنه بيوفر الوصول للـ subclasses مع حماية من الكود الخارجي.</div>
+          </li>
+          <li class="q-item"><div class="q-header"><span class="q-num">5</span><span class="q-text">ما تأثير الكلمة المفتاحية <code>final</code> على الـ method؟</span></div>
+            <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+            <div class="mcq-answer">✅ الـ <strong>final method</strong> = method لا يمكن للـ subclasses عمل override لها.<br>مثال: public final void display() { ... } → لو حاولت تعمل override لها في الـ subclass يطلع Compiler Error.<br>تُستخدم لما تريد ضمان أن سلوك معين لا يتغير في أي subclass.</div>
+          </li>
         </ul>
       </div>
 
@@ -1239,10 +1294,22 @@ emp.<span class="method">display</span>();</pre>
       <div class="section">
         <div class="section-title theory">✍️ أسئلة نظرية</div>
         <ul class="q-list">
-          <li class="q-item"><div class="q-header"><span class="q-num">1</span><span class="q-text">ما المقصود بـ Abstract Class؟ ولماذا لا يمكن إنشاء Object منها مباشرةً؟</span></div></li>
-          <li class="q-item"><div class="q-header"><span class="q-num">2</span><span class="q-text">ما الفرق بين الـ Abstract Class والـ Interface؟ متى تستخدم كل منهما؟</span></div></li>
-          <li class="q-item"><div class="q-header"><span class="q-num">3</span><span class="q-text">لماذا تسمح Java بتنفيذ أكتر من Interface ولكن لا تسمح بالوراثة من أكتر من class؟</span></div></li>
-          <li class="q-item"><div class="q-header"><span class="q-num">4</span><span class="q-text">ما هو Polymorphism؟ وكيف يتحقق في Java؟ أعطِ مثالاً.</span></div></li>
+          <li class="q-item"><div class="q-header"><span class="q-num">1</span><span class="q-text">ما المقصود بـ Abstract Class؟ ولماذا لا يمكن إنشاء Object منها مباشرةً؟</span></div>
+            <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+            <div class="mcq-answer">✅ <strong>Abstract Class</strong> = class معرّفة بكلمة abstract — تحتوي abstract methods (بدون body) لازم الـ subclasses تنفذها.<br>لا يمكن إنشاء object منها مباشرةً لأنها غير مكتملة — فيها methods بدون تنفيذ. هي بس template للـ subclasses. لو حاولت: Animal a = new Animal(); → Compiler Error.</div>
+          </li>
+          <li class="q-item"><div class="q-header"><span class="q-num">2</span><span class="q-text">ما الفرق بين الـ Abstract Class والـ Interface؟ متى تستخدم كل منهما؟</span></div>
+            <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+            <div class="mcq-answer">✅ <strong>Abstract Class</strong>: ممكن تحتوي methods عادية وabstract، عندها constructors وinstance fields، الـ class يرثها بـ extends واحدة بس.<br>استخدمها: لما يكون فيه كود مشترك بين الـ subclasses.<br><strong>Interface</strong>: كل methods abstract، الـ fields تلقائياً public static final، الـ class ينفذها بـ implements وممكن أكتر من واحدة.<br>استخدمها: لما تريد تحديد عقد (contract) للسلوك بدون تنفيذ مشترك.</div>
+          </li>
+          <li class="q-item"><div class="q-header"><span class="q-num">3</span><span class="q-text">لماذا تسمح Java بتنفيذ أكتر من Interface ولكن لا تسمح بالوراثة من أكتر من class؟</span></div>
+            <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+            <div class="mcq-answer">✅ الوراثة من أكتر من class بتسبب <strong>Diamond Problem</strong>: لو Class A وClass B عندهم نفس الـ method، والـ Class C يرث الاتنين — Java مش هتعرف تنفذ نسخة أنهي class!<br>الـ Interface بيحل المشكلة لأنه ما عندوش تنفيذ — بس signature. لما تنفذ أكتر من interface، الـ class نفسه هو اللي بيكتب التنفيذ فما فيش تعارض.</div>
+          </li>
+          <li class="q-item"><div class="q-header"><span class="q-num">4</span><span class="q-text">ما هو Polymorphism؟ وكيف يتحقق في Java؟ أعطِ مثالاً.</span></div>
+            <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+            <div class="mcq-answer">✅ <strong>Polymorphism</strong> = "أشكال متعددة" — نفس الـ reference ينفذ سلوك مختلف حسب نوع الـ object الفعلي في runtime.<br>يتحقق عبر: Method Overriding + Superclass reference pointing to Subclass object.<br>مثال:<br>Animal a1 = new Dog(); → a1.makeSound(); // Woof!<br>Animal a2 = new Cat(); → a2.makeSound(); // Meow!<br>نفس النوع Animal، لكن سلوك مختلف حسب الـ object.</div>
+          </li>
         </ul>
       </div>
 
@@ -1413,11 +1480,26 @@ System.out.<span class="method">println</span>(today.<span class="method">toStri
       <div class="section">
         <div class="section-title theory">✍️ أسئلة نظرية</div>
         <ul class="q-list">
-          <li class="q-item"><div class="q-header"><span class="q-num">1</span><span class="q-text">ما هو الـ enum في Java؟ ولماذا نستخدمه بدلاً من الـ constants العادية؟</span></div></li>
-          <li class="q-item"><div class="q-header"><span class="q-num">2</span><span class="q-text">ما الفرق بين الـ Error والـ Exception في Java؟</span></div></li>
-          <li class="q-item"><div class="q-header"><span class="q-num">3</span><span class="q-text">اشرح هيكل try-catch-finally مع ذكر متى يتنفذ كل قسم.</span></div></li>
-          <li class="q-item"><div class="q-header"><span class="q-num">4</span><span class="q-text">ما الفرق بين throw وthrows في Java؟</span></div></li>
-          <li class="q-item"><div class="q-header"><span class="q-num">5</span><span class="q-text">لماذا يجب ترتيب الـ catch clauses من الأكثر تحديداً للأكثر عمومية؟</span></div></li>
+          <li class="q-item"><div class="q-header"><span class="q-num">1</span><span class="q-text">ما هو الـ enum في Java؟ ولماذا نستخدمه بدلاً من الـ constants العادية؟</span></div>
+            <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+            <div class="mcq-answer">✅ <strong>enum</strong> = النوع المُعدَّد — بتحدد مجموعة ثابتة من القيم المسموح بها فقط. كل قيمة هي object من نوع الـ enum.<br>أفضل من constants العادية لأنه:<br>(1) Type-safe: ما تقدرش تبعت قيمة غلط<br>(2) أوضح في القراءة: Department.IT أحسن من int 2<br>(3) يمنع الأخطاء: لو كتبت اسم enum غلط Compiler Error فوراً</div>
+          </li>
+          <li class="q-item"><div class="q-header"><span class="q-num">2</span><span class="q-text">ما الفرق بين الـ Error والـ Exception في Java؟</span></div>
+            <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+            <div class="mcq-answer">✅ <strong>Error</strong>: مشكلة خطيرة في الـ JVM أو النظام — ما ينفعش نتعامل معاه بـ try-catch. مثال: OutOfMemoryError, StackOverflowError.<br><strong>Exception</strong>: مشكلة في كود البرنامج نفسه ممكن نتوقعها ونتعامل معاها. مثال: NullPointerException, ArithmeticException.<br>كلاهما يرث من Throwable، لكن Error للـ JVM وException للبرنامج.</div>
+          </li>
+          <li class="q-item"><div class="q-header"><span class="q-num">3</span><span class="q-text">اشرح هيكل try-catch-finally مع ذكر متى يتنفذ كل قسم.</span></div>
+            <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+            <div class="mcq-answer">✅ <strong>try { }</strong>: يحتوي الكود اللي ممكن يرمي exception — بيتنفذ دايماً أول ما تدخل الـ block.<br><strong>catch(ExType e) { }</strong>: بيتنفذ بس لو حصل exception من نوعه في الـ try. ممكن يكون فيه أكتر من catch.<br><strong>finally { }</strong>: بيتنفذ دايماً في كل الحالات (حصل exception أو لأ) — يُستخدم لإغلاق الملفات والـ Scanner وتنظيف الموارد.</div>
+          </li>
+          <li class="q-item"><div class="q-header"><span class="q-num">4</span><span class="q-text">ما الفرق بين throw وthrows في Java؟</span></div>
+            <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+            <div class="mcq-answer">✅ <strong>throw</strong>: كلمة مفتاحية بترمي exception يدوياً جوه الـ method. بيأتي بعدها object من نوع exception.<br>مثال: throw new IllegalArgumentException("Invalid value!");<br><strong>throws</strong>: بتكتبها في signature الـ method لتعلن أنها ممكن ترمي exception — بتحذر من يناديها.<br>مثال: public void readFile() throws IOException { ... }</div>
+          </li>
+          <li class="q-item"><div class="q-header"><span class="q-num">5</span><span class="q-text">لماذا يجب ترتيب الـ catch clauses من الأكثر تحديداً للأكثر عمومية؟</span></div>
+            <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+            <div class="mcq-answer">✅ لأن Java بتمسك الـ catch الأول اللي يناسب الـ exception بالترتيب من فوق لتحت.<br>لو كتبت Exception (العامة) أول → هتمسك كل الـ exceptions ولن تصل للـ specific catches بعدها — وده Compiler Error في Java.<br>الترتيب الصح: الأكثر تحديداً أولاً (مثل IOException) ثم الأعم (Exception) في النهاية.</div>
+          </li>
         </ul>
       </div>
 
@@ -1608,10 +1690,22 @@ names.<span class="method">remove</span>(<span class="num">0</span>); <span clas
       <div class="section">
         <div class="section-title theory">✍️ أسئلة نظرية</div>
         <ul class="q-list">
-          <li class="q-item"><div class="q-header"><span class="q-num">1</span><span class="q-text">ما الفرق الأساسي بين Array والـ ArrayList في Java؟</span></div></li>
-          <li class="q-item"><div class="q-header"><span class="q-num">2</span><span class="q-text">ما المقصود بـ Generics في ArrayList؟ لماذا نكتب &lt;String&gt; أو &lt;Integer&gt;؟</span></div></li>
-          <li class="q-item"><div class="q-header"><span class="q-num">3</span><span class="q-text">ما الفرق بين <code>add(element)</code> و <code>add(index, element)</code>؟</span></div></li>
-          <li class="q-item"><div class="q-header"><span class="q-num">4</span><span class="q-text">كيف يمكن تخزين Objects من نوع class معين في ArrayList؟</span></div></li>
+          <li class="q-item"><div class="q-header"><span class="q-num">1</span><span class="q-text">ما الفرق الأساسي بين Array والـ ArrayList في Java؟</span></div>
+            <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+            <div class="mcq-answer">✅ <strong>Array</strong>: حجم ثابت بيتحدد عند الإنشاء ولا يتغير، يقدر يخزن primitive types (int, double) وobjects.<br><strong>ArrayList</strong>: حجم ديناميكي بيكبر وبيصغر تلقائياً حسب الحاجة، بيخزن objects فقط (مش primitives مباشرة — لازم Integer مش int). يحتاج import java.util.ArrayList.</div>
+          </li>
+          <li class="q-item"><div class="q-header"><span class="q-num">2</span><span class="q-text">ما المقصود بـ Generics في ArrayList؟ لماذا نكتب &lt;String&gt; أو &lt;Integer&gt;؟</span></div>
+            <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+            <div class="mcq-answer">✅ <strong>Generics</strong> = بتحدد نوع العناصر اللي الـ ArrayList مسموح يخزنها بس.<br>مثال: ArrayList&lt;String&gt; = بس Strings. ArrayList&lt;Integer&gt; = بس integers.<br>فوائد: (1) Type-safety: Compiler Error لو حاولت تضيف نوع غلط. (2) مش محتاج casting عند الاسترجاع. (3) الكود أوضح وأأمن.</div>
+          </li>
+          <li class="q-item"><div class="q-header"><span class="q-num">3</span><span class="q-text">ما الفرق بين <code>add(element)</code> و <code>add(index, element)</code>؟</span></div>
+            <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+            <div class="mcq-answer">✅ <strong>add(element)</strong>: يضيف العنصر في نهاية الـ ArrayList — الأبسط والأسرع.<br><strong>add(index, element)</strong>: يضيف العنصر في الـ index المحدد بالظبط ويزحزح كل العناصر من الـ index ده للأمام بمقدار واحد. مثال: names.add(1, "Nour") يضيف Nour في الموضع 1 ويزحزح باقي العناصر.</div>
+          </li>
+          <li class="q-item"><div class="q-header"><span class="q-num">4</span><span class="q-text">كيف يمكن تخزين Objects من نوع class معين في ArrayList؟</span></div>
+            <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+            <div class="mcq-answer">✅ بكتابة اسم الـ class كـ Generic type عند إنشاء الـ ArrayList:<br>ArrayList&lt;Student&gt; students = new ArrayList&lt;&gt;();<br>ثم الإضافة: students.add(new Student("Ahmed", 1001, 3.8));<br>والاسترجاع: Student s = students.get(0);<br>والـ loop: for (Student s : students) { s.print(); }</div>
+          </li>
         </ul>
       </div>
 
@@ -2008,12 +2102,15 @@ Employee | Name: Sara Hassan | ...</pre>
 <script>
 function toggleAnswer(btn) {
   const answer = btn.nextElementSibling;
+  const mcqItem = btn.closest('.mcq-item');
   if (answer.style.display === 'block') {
     answer.style.display = 'none';
     btn.textContent = 'إظهار الإجابة';
+    if (mcqItem) mcqItem.classList.remove('answered');
   } else {
     answer.style.display = 'block';
     btn.textContent = 'إخفاء الإجابة';
+    if (mcqItem) mcqItem.classList.add('answered');
   }
 }
 
