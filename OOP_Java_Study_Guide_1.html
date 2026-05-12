@@ -1,0 +1,2033 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>شرح OOP Java - المنهج الكامل</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d1117;
+    --bg2: #161b22;
+    --bg3: #21262d;
+    --accent: #58a6ff;
+    --accent2: #f78166;
+    --accent3: #7ee787;
+    --accent4: #ffa657;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --border: #30363d;
+    --java: #b07d2b;
+    --lec-colors: #58a6ff, #f78166, #7ee787, #ffa657, #d2a8ff, #79c0ff, #ff7b72, #56d364;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Cairo', sans-serif;
+    line-height: 1.8;
+    font-size: 16px;
+  }
+
+  /* HEADER */
+  .main-header {
+    background: linear-gradient(135deg, #0d1117 0%, #1a237e 50%, #0d47a1 100%);
+    padding: 60px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 3px solid var(--accent);
+  }
+  .main-header::before {
+    content: '{ }';
+    position: absolute;
+    font-size: 300px;
+    font-family: 'Fira Code', monospace;
+    color: rgba(88,166,255,0.05);
+    top: -80px;
+    left: -40px;
+    line-height: 1;
+  }
+  .main-header h1 {
+    font-size: 3rem;
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 0 0 30px rgba(88,166,255,0.5);
+    margin-bottom: 10px;
+  }
+  .main-header p {
+    font-size: 1.2rem;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .badge-row {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    background: rgba(88,166,255,0.15);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  /* NAV */
+  .toc {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin: 30px auto;
+    max-width: 900px;
+    padding: 30px;
+  }
+  .toc h2 { color: var(--accent); margin-bottom: 20px; font-size: 1.4rem; }
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+  }
+  .toc-item {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    text-decoration: none;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+  }
+  .toc-item:hover { border-color: var(--accent); color: var(--accent); transform: translateX(-4px); }
+  .toc-num {
+    background: var(--accent);
+    color: #000;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* MAIN */
+  .container { max-width: 1000px; margin: 0 auto; padding: 20px 30px; }
+
+  /* LECTURE */
+  .lecture {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    margin-bottom: 50px;
+    overflow: hidden;
+  }
+  .lecture-header {
+    padding: 24px 30px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .lecture-header.l1 { background: linear-gradient(135deg, #1a237e22, #0d1117); border-left: 4px solid #58a6ff; }
+  .lecture-header.l2 { background: linear-gradient(135deg, #b71c1c22, #0d1117); border-left: 4px solid #f78166; }
+  .lecture-header.l3 { background: linear-gradient(135deg, #1b5e2022, #0d1117); border-left: 4px solid #7ee787; }
+  .lecture-header.l4 { background: linear-gradient(135deg, #e65100 22, #0d1117); border-left: 4px solid #ffa657; }
+  .lecture-header.l5 { background: linear-gradient(135deg, #4a148c22, #0d1117); border-left: 4px solid #d2a8ff; }
+  .lecture-header.l6 { background: linear-gradient(135deg, #006064 22, #0d1117); border-left: 4px solid #79c0ff; }
+  .lecture-header.l7 { background: linear-gradient(135deg, #880e4f22, #0d1117); border-left: 4px solid #ff7b72; }
+  .lecture-header.l8 { background: linear-gradient(135deg, #1a237e22, #0d1117); border-left: 4px solid #56d364; }
+
+  .lec-num {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--text-muted);
+    font-family: 'Fira Code', monospace;
+    flex-shrink: 0;
+  }
+  .lec-title h2 { font-size: 1.4rem; font-weight: 700; }
+  .lec-title p { color: var(--text-muted); font-size: 0.9rem; }
+
+  .lecture-body { padding: 30px; }
+
+  /* SECTIONS */
+  .section { margin-bottom: 30px; }
+  .section-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 8px 16px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title.explain { background: rgba(88,166,255,0.1); color: #58a6ff; border-right: 3px solid #58a6ff; }
+  .section-title.theory { background: rgba(255,166,87,0.1); color: #ffa657; border-right: 3px solid #ffa657; }
+  .section-title.mcq { background: rgba(126,231,135,0.1); color: #7ee787; border-right: 3px solid #7ee787; }
+  .section-title.code-q { background: rgba(210,168,255,0.1); color: #d2a8ff; border-right: 3px solid #d2a8ff; }
+
+  /* EXPLANATION */
+  .explain-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 14px;
+  }
+  .explain-card h4 { color: var(--accent); margin-bottom: 8px; font-size: 1rem; }
+  .explain-card p, .explain-card li { color: var(--text); font-size: 0.95rem; line-height: 1.9; }
+  .explain-card ul { padding-right: 20px; }
+  .explain-card li { margin-bottom: 4px; }
+
+  /* CODE BLOCK */
+  .code-block {
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    margin: 14px 0;
+    overflow: hidden;
+    direction: ltr;
+  }
+  .code-header {
+    background: #161b22;
+    padding: 8px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #30363d;
+  }
+  .code-lang {
+    color: var(--accent4);
+    font-family: 'Fira Code', monospace;
+    font-size: 0.8rem;
+  }
+  .code-block pre {
+    padding: 20px;
+    overflow-x: auto;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: #e6edf3;
+  }
+  .kw { color: #ff7b72; }
+  .cls { color: #ffa657; }
+  .str { color: #a5d6ff; }
+  .cmt { color: #8b949e; font-style: italic; }
+  .num { color: #79c0ff; }
+  .method { color: #d2a8ff; }
+  .type { color: #7ee787; }
+
+  /* QUESTIONS */
+  .q-list { list-style: none; }
+  .q-item {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    position: relative;
+  }
+  .q-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: var(--accent4);
+    color: #000;
+    border-radius: 50%;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-left: 10px;
+    flex-shrink: 0;
+  }
+  .q-text { color: var(--text); font-size: 0.95rem; }
+  .q-header { display: flex; align-items: flex-start; }
+
+  /* MCQ */
+  .mcq-item {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+  }
+  .mcq-q { font-weight: 600; margin-bottom: 12px; color: var(--text); }
+  .mcq-options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .mcq-opt {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    direction: rtl;
+    text-align: right;
+  }
+  .mcq-opt:hover { border-color: var(--accent); color: var(--accent); }
+  .mcq-opt.correct { border-color: #7ee787; background: rgba(126,231,135,0.1); color: #7ee787; }
+  .mcq-opt.wrong { border-color: #ff7b72; background: rgba(255,123,114,0.1); color: #ff7b72; }
+  .mcq-answer {
+    margin-top: 10px;
+    padding: 8px 14px;
+    background: rgba(126,231,135,0.08);
+    border-right: 3px solid #7ee787;
+    border-radius: 6px;
+    color: #7ee787;
+    font-size: 0.88rem;
+    display: none;
+  }
+  .show-answer-btn {
+    background: none;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 5px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    margin-top: 10px;
+    font-family: 'Cairo', sans-serif;
+    transition: all 0.2s;
+  }
+  .show-answer-btn:hover { background: var(--accent); color: #000; }
+
+  /* CODE QUESTION */
+  .code-q-item {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+  }
+  .code-q-item .cq-text { margin-bottom: 12px; font-weight: 600; }
+  .toggle-solution {
+    background: none;
+    border: 1px solid var(--accent4);
+    color: var(--accent4);
+    padding: 6px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-family: 'Cairo', sans-serif;
+    margin-bottom: 10px;
+    transition: all 0.2s;
+  }
+  .toggle-solution:hover { background: var(--accent4); color: #000; }
+  .solution { display: none; }
+  .solution.show { display: block; }
+
+  /* FINAL PROJECT */
+  .final-section {
+    background: linear-gradient(135deg, #0d1117, #1a237e, #0d1117);
+    border: 2px solid var(--accent);
+    border-radius: 20px;
+    margin-bottom: 40px;
+    overflow: hidden;
+  }
+  .final-header {
+    background: linear-gradient(90deg, #1a237e, #0d47a1);
+    padding: 30px;
+    text-align: center;
+    border-bottom: 2px solid var(--accent);
+  }
+  .final-header h2 { font-size: 2rem; color: #fff; margin-bottom: 8px; }
+  .final-header p { color: var(--accent); }
+  .final-body { padding: 30px; }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 24px 0;
+  }
+
+  /* KEY POINTS */
+  .key-points {
+    background: rgba(88,166,255,0.05);
+    border: 1px solid rgba(88,166,255,0.2);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 14px;
+  }
+  .key-points h4 { color: var(--accent); margin-bottom: 10px; }
+  .key-points li { color: var(--text-muted); font-size: 0.92rem; margin-bottom: 4px; }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 30px;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 600px) {
+    .main-header h1 { font-size: 2rem; }
+    .container { padding: 15px; }
+    .mcq-options { grid-template-columns: 1fr; }
+    .toc-grid { grid-template-columns: 1fr; }
+    .lecture-body { padding: 20px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="main-header">
+  <h1>🎓 Object Oriented Programming</h1>
+  <p>شرح كامل + أسئلة نظرية + MCQ + أكواد لكل محاضرة</p>
+  <div class="badge-row">
+    <span class="badge">☕ Java</span>
+    <span class="badge">📚 8 محاضرات</span>
+    <span class="badge">❓ أسئلة تفاعلية</span>
+    <span class="badge">💻 أكواد شاملة</span>
+  </div>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<div class="container">
+  <div class="toc">
+    <h2>📋 فهرس المحاضرات</h2>
+    <div class="toc-grid">
+      <a href="#lec1" class="toc-item"><span class="toc-num">1</span> مقدمة OOP</a>
+      <a href="#lec2" class="toc-item"><span class="toc-num">2</span> Classes & Objects</a>
+      <a href="#lec3" class="toc-item"><span class="toc-num">3</span> Constructors & Static</a>
+      <a href="#lec4" class="toc-item"><span class="toc-num">4</span> Inheritance</a>
+      <a href="#lec5" class="toc-item"><span class="toc-num">5</span> Abstract & Interfaces</a>
+      <a href="#lec6" class="toc-item"><span class="toc-num">6</span> Enums & Exceptions</a>
+      <a href="#lec7" class="toc-item"><span class="toc-num">7</span> ArrayList</a>
+      <a href="#final" class="toc-item"><span class="toc-num">★</span> الكود الشامل</a>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- LECTURE 1 -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="lecture" id="lec1">
+    <div class="lecture-header l1">
+      <div class="lec-num">01</div>
+      <div class="lec-title">
+        <h2>مقدمة في البرمجة كائنية التوجه (OOP)</h2>
+        <p>What is OOP • Programming Paradigms • Objects & Classes</p>
+      </div>
+    </div>
+    <div class="lecture-body">
+
+      <!-- EXPLANATION -->
+      <div class="section">
+        <div class="section-title explain">📖 الشرح</div>
+        <div class="explain-card">
+          <h4>ما هي البرمجة كائنية التوجه؟</h4>
+          <p>OOP هي أسلوب برمجة بيتعامل مع البرنامج على أساس إنه مجموعة من <strong>Objects (كائنات)</strong>. كل object بيتجمع فيه:</p>
+          <ul>
+            <li>📦 <strong>Data (بيانات)</strong> — زي اسم الطالب، رقمه، الـ GPA</li>
+            <li>⚙️ <strong>Operations/Methods (عمليات)</strong> — زي تعديل الـ GPA، طباعة البيانات</li>
+          </ul>
+        </div>
+        <div class="explain-card">
+          <h4>الفرق بين البرمجة الإجرائية (Procedural) و OOP</h4>
+          <ul>
+            <li><strong>Procedural:</strong> بتكتب قائمة تعليمات خطوة بخطوة من فوق لتحت (top-down approach)</li>
+            <li><strong>OOP:</strong> بتفكر في المشكلة على أنها كائنات بتتفاعل مع بعض</li>
+          </ul>
+        </div>
+        <div class="explain-card">
+          <h4>Class vs Object</h4>
+          <ul>
+            <li>🏗️ <strong>Class:</strong> المخطط التصميمي (Blueprint) — زي تصميم الشقة</li>
+            <li>🏠 <strong>Object:</strong> النسخة الفعلية (Instance) — زي الشقة المبنية فعلاً</li>
+            <li>ممكن تعمل كذا object من نفس الـ class</li>
+          </ul>
+        </div>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Java - مثال بسيط</span></div>
+          <pre><span class="cmt">// Class = المخطط (Blueprint)</span>
+<span class="kw">public class</span> <span class="cls">Student</span> {
+    <span class="type">String</span> name;
+    <span class="type">int</span> id;
+    <span class="type">double</span> gpa;
+}
+
+<span class="cmt">// Objects = نسخ حقيقية من الـ Class</span>
+<span class="cls">Student</span> s1 = <span class="kw">new</span> <span class="cls">Student</span>(); <span class="cmt">// Student 1</span>
+<span class="cls">Student</span> s2 = <span class="kw">new</span> <span class="cls">Student</span>(); <span class="cmt">// Student 2</span></pre>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- THEORY QUESTIONS -->
+      <div class="section">
+        <div class="section-title theory">✍️ أسئلة نظرية</div>
+        <ul class="q-list">
+          <li class="q-item">
+            <div class="q-header"><span class="q-num">1</span><span class="q-text">ما المقصود بـ Programming Paradigm؟ وما الفرق بين البرمجة الإجرائية وبرمجة OOP؟</span></div>
+          </li>
+          <li class="q-item">
+            <div class="q-header"><span class="q-num">2</span><span class="q-text">ما هو الـ Object؟ اذكر مثالاً من الحياة اليومية مع تحديد البيانات والعمليات.</span></div>
+          </li>
+          <li class="q-item">
+            <div class="q-header"><span class="q-num">3</span><span class="q-text">ما الفرق بين الـ Class والـ Object؟ وما معنى "Instance of a class"؟</span></div>
+          </li>
+          <li class="q-item">
+            <div class="q-header"><span class="q-num">4</span><span class="q-text">لو بتصمم برنامج لإدارة مكتبة، اذكر 4 objects مختلفة مع بياناتها وعملياتها.</span></div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- MCQ -->
+      <div class="section">
+        <div class="section-title mcq">✅ أسئلة MCQ</div>
+
+        <div class="mcq-item">
+          <div class="mcq-q">1. OOP هو اختصار لـ?</div>
+          <div class="mcq-options">
+            <div class="mcq-opt">Object Oriented Process</div>
+            <div class="mcq-opt correct">Object Oriented Programming</div>
+            <div class="mcq-opt">Object Operation Protocol</div>
+            <div class="mcq-opt">Ordered Object Programming</div>
+          </div>
+          <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+          <div class="mcq-answer">✅ الإجابة: Object Oriented Programming — أسلوب برمجة بيعتمد على الكائنات</div>
+        </div>
+
+        <div class="mcq-item">
+          <div class="mcq-q">2. الـ Class في OOP يُعتبر مثل؟</div>
+          <div class="mcq-options">
+            <div class="mcq-opt">الكائن (Object) نفسه</div>
+            <div class="mcq-opt">متغير في البرنامج</div>
+            <div class="mcq-opt correct">المخطط التصميمي (Blueprint)</div>
+            <div class="mcq-opt">دالة (Function)</div>
+          </div>
+          <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+          <div class="mcq-answer">✅ الإجابة: المخطط التصميمي — الـ Class بيحدد البيانات والعمليات، والـ Object هو النسخة الفعلية</div>
+        </div>
+
+        <div class="mcq-item">
+          <div class="mcq-q">3. الـ Object في Java بيتكون من؟</div>
+          <div class="mcq-options">
+            <div class="mcq-opt">دوال فقط</div>
+            <div class="mcq-opt">متغيرات فقط</div>
+            <div class="mcq-opt">حلقات وشروط</div>
+            <div class="mcq-opt correct">بيانات (Data) + عمليات (Operations)</div>
+          </div>
+          <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+          <div class="mcq-answer">✅ الإجابة: البيانات + العمليات — الـ Object بيجمع فيه الـ fields والـ methods</div>
+        </div>
+
+        <div class="mcq-item">
+          <div class="mcq-q">4. أي من التالي مثال صح لإنشاء Object في Java؟</div>
+          <div class="mcq-options">
+            <div class="mcq-opt">Student s = Student();</div>
+            <div class="mcq-opt correct">Student s = new Student();</div>
+            <div class="mcq-opt">new Student s = Student();</div>
+            <div class="mcq-opt">create Student s;</div>
+          </div>
+          <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+          <div class="mcq-answer">✅ الإجابة: Student s = new Student(); — الكلمة new مطلوبة لإنشاء Object جديد</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- CODE QUESTION -->
+      <div class="section">
+        <div class="section-title code-q">💻 أسئلة كتابة كود</div>
+        <div class="code-q-item">
+          <div class="cq-text">🔹 اكتب Class اسمه Car يحتوي على: brand, model, year, color كـ fields، مع إنشاء object منه.</div>
+          <button class="toggle-solution" onclick="toggleSolution(this)">🔓 عرض الحل</button>
+          <div class="solution">
+            <div class="code-block">
+              <div class="code-header"><span class="code-lang">Java - Solution</span></div>
+              <pre><span class="kw">public class</span> <span class="cls">Car</span> {
+    <span class="type">String</span> brand;
+    <span class="type">String</span> model;
+    <span class="type">int</span>    year;
+    <span class="type">String</span> color;
+}
+
+<span class="kw">public class</span> <span class="cls">Main</span> {
+    <span class="kw">public static void</span> <span class="method">main</span>(<span class="type">String</span>[] args) {
+        <span class="cls">Car</span> myCar = <span class="kw">new</span> <span class="cls">Car</span>();
+        myCar.brand = <span class="str">"Toyota"</span>;
+        myCar.model = <span class="str">"Camry"</span>;
+        myCar.year  = <span class="num">2024</span>;
+        myCar.color = <span class="str">"White"</span>;
+
+        System.out.<span class="method">println</span>(myCar.brand + <span class="str">" "</span> + myCar.model);
+    }
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- LECTURE 2 -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="lecture" id="lec2">
+    <div class="lecture-header l2">
+      <div class="lec-num">02</div>
+      <div class="lec-title">
+        <h2>كتابة الـ Classes — Access Modifiers & Encapsulation</h2>
+        <p>Fields • Methods • Getters & Setters • Data Hiding</p>
+      </div>
+    </div>
+    <div class="lecture-body">
+
+      <div class="section">
+        <div class="section-title explain">📖 الشرح</div>
+        <div class="explain-card">
+          <h4>Access Modifiers</h4>
+          <ul>
+            <li>🔓 <strong>public:</strong> يُوصله أي كود من أي مكان</li>
+            <li>🔒 <strong>private:</strong> يُوصله بس الـ methods جوه نفس الـ class</li>
+            <li>🔐 <strong>protected:</strong> يُوصله الـ subclasses وأي class في نفس الـ package</li>
+          </ul>
+        </div>
+        <div class="explain-card">
+          <h4>Data Hiding (Encapsulation)</h4>
+          <p>المبدأ: اجعل الـ fields كلها <code>private</code> وفرّ <code>public</code> methods للوصول إليها</p>
+          <ul>
+            <li>🛡️ Getter (Accessor): يجيب قيمة الـ field — يبدأ بـ <code>get</code></li>
+            <li>✏️ Setter (Mutator): يغير قيمة الـ field — يبدأ بـ <code>set</code></li>
+          </ul>
+        </div>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Java - Rectangle Class</span></div>
+          <pre><span class="kw">public class</span> <span class="cls">Rectangle</span> {
+    <span class="kw">private</span> <span class="type">double</span> length; <span class="cmt">// private — لا يُوصله من الخارج</span>
+    <span class="kw">private</span> <span class="type">double</span> width;
+
+    <span class="cmt">// Setter</span>
+    <span class="kw">public void</span> <span class="method">setLength</span>(<span class="type">double</span> len) { length = len; }
+    <span class="kw">public void</span> <span class="method">setWidth</span>(<span class="type">double</span> w)   { width = w;   }
+
+    <span class="cmt">// Getter</span>
+    <span class="kw">public double</span> <span class="method">getLength</span>() { <span class="kw">return</span> length; }
+    <span class="kw">public double</span> <span class="method">getWidth</span>()  { <span class="kw">return</span> width;  }
+
+    <span class="kw">public double</span> <span class="method">getArea</span>() { <span class="kw">return</span> length * width; }
+}
+
+<span class="cmt">// الاستخدام</span>
+<span class="cls">Rectangle</span> box = <span class="kw">new</span> <span class="cls">Rectangle</span>();
+box.<span class="method">setLength</span>(<span class="num">10.0</span>);
+box.<span class="method">setWidth</span>(<span class="num">5.0</span>);
+System.out.<span class="method">println</span>(<span class="str">"Area: "</span> + box.<span class="method">getArea</span>()); <span class="cmt">// 50.0</span></pre>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <div class="section-title theory">✍️ أسئلة نظرية</div>
+        <ul class="q-list">
+          <li class="q-item"><div class="q-header"><span class="q-num">1</span><span class="q-text">ما الفرق بين <code>public</code> و <code>private</code> كـ access modifiers؟ ولماذا نفضل جعل الـ fields خاصة (private)؟</span></div></li>
+          <li class="q-item"><div class="q-header"><span class="q-num">2</span><span class="q-text">ما المقصود بـ Data Hiding؟ ولماذا هو مهم في برمجة OOP؟</span></div></li>
+          <li class="q-item"><div class="q-header"><span class="q-num">3</span><span class="q-text">ما الفرق بين الـ Getter والـ Setter؟ أعطِ مثالاً لكل منهما.</span></div></li>
+          <li class="q-item"><div class="q-header"><span class="q-num">4</span><span class="q-text">ما هي الـ Instance Fields والـ Instance Methods؟ لماذا تحتاج لإنشاء Object لاستخدامها؟</span></div></li>
+        </ul>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <div class="section-title mcq">✅ أسئلة MCQ</div>
+
+        <div class="mcq-item">
+          <div class="mcq-q">1. ما نتيجة محاولة الوصول لـ private field من خارج الـ class؟</div>
+          <div class="mcq-options">
+            <div class="mcq-opt">يعمل بشكل طبيعي</div>
+            <div class="mcq-opt correct">خطأ في الـ Compiler</div>
+            <div class="mcq-opt">خطأ في وقت التشغيل</div>
+            <div class="mcq-opt">لا شيء يحدث</div>
+          </div>
+          <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+          <div class="mcq-answer">✅ الإجابة: Compiler Error — Java لا يسمح بالوصول للـ private members من خارج الـ class</div>
+        </div>
+
+        <div class="mcq-item">
+          <div class="mcq-q">2. الـ Setter method يُستخدم لـ؟</div>
+          <div class="mcq-options">
+            <div class="mcq-opt correct">تعديل قيمة الـ field</div>
+            <div class="mcq-opt">قراءة قيمة الـ field</div>
+            <div class="mcq-opt">حذف الـ object</div>
+            <div class="mcq-opt">إنشاء object جديد</div>
+          </div>
+          <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+          <div class="mcq-answer">✅ الإجابة: تعديل قيمة الـ field — الـ Getter يقرأ والـ Setter يعدل</div>
+        </div>
+
+        <div class="mcq-item">
+          <div class="mcq-q">3. في الكود: <code>Rectangle box = new Rectangle();</code> — ما الذي يُخزن في المتغير box؟</div>
+          <div class="mcq-options">
+            <div class="mcq-opt">الـ Object نفسه</div>
+            <div class="mcq-opt correct">عنوان الـ Object في الذاكرة</div>
+            <div class="mcq-opt">صفر (0)</div>
+            <div class="mcq-opt">اسم الـ Class</div>
+          </div>
+          <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+          <div class="mcq-answer">✅ الإجابة: عنوان الـ Object — الـ Reference Variable بيخزن العنوان (Address) مش الـ Object نفسه</div>
+        </div>
+
+        <div class="mcq-item">
+          <div class="mcq-q">4. ما اسم الـ method التي تبدأ بكلمة get وترجع قيمة الـ field؟</div>
+          <div class="mcq-options">
+            <div class="mcq-opt">Setter / Mutator</div>
+            <div class="mcq-opt correct">Getter / Accessor</div>
+            <div class="mcq-opt">Constructor</div>
+            <div class="mcq-opt">Destructor</div>
+          </div>
+          <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+          <div class="mcq-answer">✅ الإجابة: Getter / Accessor — تُستخدم لقراءة قيمة الـ private field</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <div class="section-title code-q">💻 أسئلة كتابة كود</div>
+        <div class="code-q-item">
+          <div class="cq-text">🔹 اكتب class اسمه BankAccount يحتوي على: balance (double), accountName (String) — جميعها private، مع الـ Getters والـ Setters المناسبة وـ method تسمى deposit تضيف مبلغ للرصيد وأخرى withdraw تطرح منه.</div>
+          <button class="toggle-solution" onclick="toggleSolution(this)">🔓 عرض الحل</button>
+          <div class="solution">
+            <div class="code-block">
+              <div class="code-header"><span class="code-lang">Java - Solution</span></div>
+              <pre><span class="kw">public class</span> <span class="cls">BankAccount</span> {
+    <span class="kw">private</span> <span class="type">double</span> balance;
+    <span class="kw">private</span> <span class="type">String</span> accountName;
+
+    <span class="kw">public void</span> <span class="method">setBalance</span>(<span class="type">double</span> b)      { balance = b; }
+    <span class="kw">public void</span> <span class="method">setAccountName</span>(<span class="type">String</span> n) { accountName = n; }
+
+    <span class="kw">public double</span> <span class="method">getBalance</span>()     { <span class="kw">return</span> balance; }
+    <span class="kw">public String</span> <span class="method">getAccountName</span>() { <span class="kw">return</span> accountName; }
+
+    <span class="kw">public void</span> <span class="method">deposit</span>(<span class="type">double</span> amount) {
+        <span class="kw">if</span> (amount > <span class="num">0</span>) balance += amount;
+    }
+
+    <span class="kw">public void</span> <span class="method">withdraw</span>(<span class="type">double</span> amount) {
+        <span class="kw">if</span> (amount > <span class="num">0</span> && amount <= balance)
+            balance -= amount;
+        <span class="kw">else</span>
+            System.out.<span class="method">println</span>(<span class="str">"Insufficient funds!"</span>);
+    }
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- LECTURE 3 -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="lecture" id="lec3">
+    <div class="lecture-header l3">
+      <div class="lec-num">03</div>
+      <div class="lec-title">
+        <h2>Constructors & Static Members & Copy Objects</h2>
+        <p>Constructors • Overloading • Static Fields & Methods • Copy Constructor</p>
+      </div>
+    </div>
+    <div class="lecture-body">
+
+      <div class="section">
+        <div class="section-title explain">📖 الشرح</div>
+        <div class="explain-card">
+          <h4>الـ Constructor (المُنشئ)</h4>
+          <ul>
+            <li>Method بيتنادي تلقائياً لما بتعمل Object</li>
+            <li>نفس اسم الـ Class، ومعندوش return type</li>
+            <li>لو ما كتبتش constructor، Java بتوفر default constructor تلقائياً</li>
+          </ul>
+        </div>
+        <div class="explain-card">
+          <h4>Method Overloading</h4>
+          <p>نفس اسم الـ method بس بـ parameters مختلفة — Java بتعرف تنادي أنهي واحدة حسب الـ arguments</p>
+        </div>
+        <div class="explain-card">
+          <h4>Static Members</h4>
+          <ul>
+            <li>الـ static fields والـ static methods مش بتتبع لـ object بعينه — بتتبع للـ class نفسه</li>
+            <li>بتستخدمها باسم الـ class: <code>Math.sqrt(25)</code></li>
+            <li>الـ static methods مش قادرة توصل للـ instance fields</li>
+          </ul>
+        </div>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Java - Constructors & Overloading</span></div>
+          <pre><span class="kw">public class</span> <span class="cls">Rectangle</span> {
+    <span class="kw">private</span> <span class="type">double</span> length, width;
+
+    <span class="cmt">// No-arg constructor</span>
+    <span class="kw">public</span> <span class="cls">Rectangle</span>() {
+        length = <span class="num">1.0</span>;
+        width  = <span class="num">1.0</span>;
+    }
+
+    <span class="cmt">// Parameterized constructor</span>
+    <span class="kw">public</span> <span class="cls">Rectangle</span>(<span class="type">double</span> len, <span class="type">double</span> w) {
+        length = len;
+        width  = w;
+    }
+
+    <span class="cmt">// Copy constructor</span>
+    <span class="kw">public</span> <span class="cls">Rectangle</span>(<span class="cls">Rectangle</span> other) {
+        length = other.length;
+        width  = other.width;
+    }
+
+    <span class="kw">public double</span> <span class="method">getArea</span>() { <span class="kw">return</span> length * width; }
+}
+
+<span class="cmt">// الاستخدام</span>
+<span class="cls">Rectangle</span> r1 = <span class="kw">new</span> <span class="cls">Rectangle</span>();        <span class="cmt">// 1x1</span>
+<span class="cls">Rectangle</span> r2 = <span class="kw">new</span> <span class="cls">Rectangle</span>(<span class="num">5.0</span>, <span class="num">10.0</span>); <span class="cmt">// 5x10</span>
+<span class="cls">Rectangle</span> r3 = <span class="kw">new</span> <span class="cls">Rectangle</span>(r2);       <span class="cmt">// نسخة من r2</span></pre>
+        </div>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Java - Static Members</span></div>
+          <pre><span class="kw">public class</span> <span class="cls">Counter</span> {
+    <span class="kw">private static int</span> count = <span class="num">0</span>; <span class="cmt">// مشترك بين كل الـ objects</span>
+
+    <span class="kw">public</span> <span class="cls">Counter</span>() { count++; }
+
+    <span class="kw">public static int</span> <span class="method">getCount</span>() { <span class="kw">return</span> count; }
+}
+
+<span class="cls">Counter</span> c1 = <span class="kw">new</span> <span class="cls">Counter</span>();
+<span class="cls">Counter</span> c2 = <span class="kw">new</span> <span class="cls">Counter</span>();
+System.out.<span class="method">println</span>(<span class="cls">Counter</span>.<span class="method">getCount</span>()); <span class="cmt">// 2</span></pre>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <div class="section-title theory">✍️ أسئلة نظرية</div>
+        <ul class="q-list">
+          <li class="q-item"><div class="q-header"><span class="q-num">1</span><span class="q-text">ما هو الـ Constructor؟ اذكر 4 خصائص تميزه عن الـ methods العادية.</span></div></li>
+          <li class="q-item"><div class="q-header"><span class="q-num">2</span><span class="q-text">ما هو الـ Default Constructor؟ متى تتوفره Java تلقائياً ومتى لا؟</span></div></li>
+          <li class="q-item"><div class="q-header"><span class="q-num">3</span><span class="q-text">ما المقصود بـ Method Overloading؟ وما الفرق بينه وبين Method Overriding؟</span></div></li>
+          <li class="q-item"><div class="q-header"><span class="q-num">4</span><span class="q-text">ما الفرق بين الـ Static field والـ Instance field؟ أعطِ مثالاً توضيحياً.</span></div></li>
+          <li class="q-item"><div class="q-header"><span class="q-num">5</span><span class="q-text">ما الفرق بين الـ Reference copy والـ Deep copy؟ ولماذا نستخدم Copy Constructor؟</span></div></li>
+        </ul>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <div class="section-title mcq">✅ أسئلة MCQ</div>
+
+        <div class="mcq-item">
+          <div class="mcq-q">1. الـ Constructor لازم يكون ليه؟</div>
+          <div class="mcq-options">
+            <div class="mcq-opt">return type = void</div>
+            <div class="mcq-opt">return type = int</div>
+            <div class="mcq-opt correct">لا يوجد له return type</div>
+            <div class="mcq-opt">return type = boolean</div>
+          </div>
+          <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+          <div class="mcq-answer">✅ الإجابة: لا يوجد له return type — مش حتى void</div>
+        </div>
+
+        <div class="mcq-item">
+          <div class="mcq-q">2. ما اسم الـ Constructor الذي لا يأخذ parameters؟</div>
+          <div class="mcq-options">
+            <div class="mcq-opt">Parameterized Constructor</div>
+            <div class="mcq-opt correct">No-arg Constructor</div>
+            <div class="mcq-opt">Copy Constructor</div>
+            <div class="mcq-opt">Static Constructor</div>
+          </div>
+          <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+          <div class="mcq-answer">✅ الإجابة: No-arg Constructor — لا يأخذ أي parameters</div>
+        </div>
+
+        <div class="mcq-item">
+          <div class="mcq-q">3. لاستخدام static method لا تحتاج إلى؟</div>
+          <div class="mcq-options">
+            <div class="mcq-opt">اسم الـ class</div>
+            <div class="mcq-opt correct">إنشاء Object</div>
+            <div class="mcq-opt">تحديد return type</div>
+            <div class="mcq-opt">كتابة parameters</div>
+          </div>
+          <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+          <div class="mcq-answer">✅ الإجابة: إنشاء Object — الـ static methods بتتنادي باسم الـ class مباشرةً</div>
+        </div>
+
+        <div class="mcq-item">
+          <div class="mcq-q">4. الـ Method Overloading يعني؟</div>
+          <div class="mcq-options">
+            <div class="mcq-opt">نفس الـ method في subclass</div>
+            <div class="mcq-opt">method بدون return type</div>
+            <div class="mcq-opt correct">نفس الاسم بـ parameters مختلفة</div>
+            <div class="mcq-opt">method بداخل method</div>
+          </div>
+          <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+          <div class="mcq-answer">✅ الإجابة: نفس الاسم بـ parameters مختلفة — الـ signature لازم تكون مختلفة</div>
+        </div>
+
+        <div class="mcq-item">
+          <div class="mcq-q">5. ما الفرق بين: <code>Rectangle r2 = r1;</code> و <code>Rectangle r2 = new Rectangle(r1);</code>؟</div>
+          <div class="mcq-options">
+            <div class="mcq-opt">لا فرق بينهما</div>
+            <div class="mcq-opt">الأولى أسرع</div>
+            <div class="mcq-opt correct">الأولى reference copy والثانية deep copy</div>
+            <div class="mcq-opt">الثانية خطأ</div>
+          </div>
+          <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+          <div class="mcq-answer">✅ الإجابة: الأولى reference copy (نفس الـ object) والثانية deep copy (نسخة مستقلة جديدة)</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <div class="section-title code-q">💻 أسئلة كتابة كود</div>
+        <div class="code-q-item">
+          <div class="cq-text">🔹 اكتب class اسمه Student فيه: name, id, gpa — مع 3 constructors (no-arg, parameterized, copy) وـ static field عدد الطلاب.</div>
+          <button class="toggle-solution" onclick="toggleSolution(this)">🔓 عرض الحل</button>
+          <div class="solution">
+            <div class="code-block">
+              <div class="code-header"><span class="code-lang">Java - Solution</span></div>
+              <pre><span class="kw">public class</span> <span class="cls">Student</span> {
+    <span class="kw">private</span> <span class="type">String</span> name;
+    <span class="kw">private</span> <span class="type">int</span>    id;
+    <span class="kw">private</span> <span class="type">double</span> gpa;
+    <span class="kw">private static int</span> count = <span class="num">0</span>;
+
+    <span class="cmt">// No-arg constructor</span>
+    <span class="kw">public</span> <span class="cls">Student</span>() {
+        name = <span class="str">"Unknown"</span>;
+        id   = <span class="num">0</span>;
+        gpa  = <span class="num">0.0</span>;
+        count++;
+    }
+
+    <span class="cmt">// Parameterized constructor</span>
+    <span class="kw">public</span> <span class="cls">Student</span>(<span class="type">String</span> n, <span class="type">int</span> i, <span class="type">double</span> g) {
+        name = n; id = i; gpa = g;
+        count++;
+    }
+
+    <span class="cmt">// Copy constructor</span>
+    <span class="kw">public</span> <span class="cls">Student</span>(<span class="cls">Student</span> other) {
+        name = other.name;
+        id   = other.id;
+        gpa  = other.gpa;
+        count++;
+    }
+
+    <span class="kw">public static int</span> <span class="method">getCount</span>() { <span class="kw">return</span> count; }
+
+    <span class="kw">public void</span> <span class="method">print</span>() {
+        System.out.<span class="method">println</span>(name + <span class="str">" | ID: "</span> + id + <span class="str">" | GPA: "</span> + gpa);
+    }
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- LECTURE 4 -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="lecture" id="lec4">
+    <div class="lecture-header l4">
+      <div class="lec-num">04</div>
+      <div class="lec-title">
+        <h2>الوراثة (Inheritance)</h2>
+        <p>extends • super • Method Overriding • protected • final</p>
+      </div>
+    </div>
+    <div class="lecture-body">
+
+      <div class="section">
+        <div class="section-title explain">📖 الشرح</div>
+        <div class="explain-card">
+          <h4>ما هي الوراثة؟</h4>
+          <p>الـ Inheritance بتخلي الـ <strong>Subclass</strong> ترث الـ fields والـ methods من الـ <strong>Superclass</strong>، وتضيف عليها خصائص جديدة.</p>
+          <ul>
+            <li>علاقة <strong>"is a"</strong>: الـ Employee "is a" Person</li>
+            <li>الـ Superclass = Parent Class = Base Class</li>
+            <li>الـ Subclass = Child Class = Derived Class</li>
+            <li>الكلمة المفتاحية: <code>extends</code></li>
+          </ul>
+        </div>
+        <div class="explain-card">
+          <h4>Method Overriding</h4>
+          <p>الـ Subclass تعيد كتابة method من الـ Superclass بنفس الـ signature لكن بتنفيذ مختلف.</p>
+          <ul>
+            <li>يُستخدم annotation: <code>@Override</code></li>
+            <li>للوصول لنسخة الـ Superclass: <code>super.methodName()</code></li>
+            <li>لمنع الـ Override: استخدم <code>final</code></li>
+          </ul>
+        </div>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Java - Inheritance Example</span></div>
+          <pre><span class="cmt">// Superclass</span>
+<span class="kw">public class</span> <span class="cls">Person</span> {
+    <span class="kw">protected</span> <span class="type">String</span> name;
+    <span class="kw">protected</span> <span class="type">int</span>    age;
+
+    <span class="kw">public</span> <span class="cls">Person</span>(<span class="type">String</span> n, <span class="type">int</span> a) { name = n; age = a; }
+
+    <span class="kw">public void</span> <span class="method">display</span>() {
+        System.out.<span class="method">println</span>(<span class="str">"Name: "</span> + name + <span class="str">", Age: "</span> + age);
+    }
+}
+
+<span class="cmt">// Subclass</span>
+<span class="kw">public class</span> <span class="cls">Employee</span> <span class="kw">extends</span> <span class="cls">Person</span> {
+    <span class="kw">private</span> <span class="type">double</span> salary;
+
+    <span class="kw">public</span> <span class="cls">Employee</span>(<span class="type">String</span> n, <span class="type">int</span> a, <span class="type">double</span> s) {
+        <span class="kw">super</span>(n, a); <span class="cmt">// نُنادي Constructor الـ Superclass</span>
+        salary = s;
+    }
+
+    <span class="cmt">// Override display method</span>
+    @Override
+    <span class="kw">public void</span> <span class="method">display</span>() {
+        <span class="kw">super</span>.<span class="method">display</span>(); <span class="cmt">// نُنادي نسخة الـ Superclass</span>
+        System.out.<span class="method">println</span>(<span class="str">"Salary: "</span> + salary);
+    }
+}
+
+<span class="cmt">// الاستخدام</span>
+<span class="cls">Employee</span> emp = <span class="kw">new</span> <span class="cls">Employee</span>(<span class="str">"Ahmed"</span>, <span class="num">30</span>, <span class="num">5000.0</span>);
+emp.<span class="method">display</span>();</pre>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <div class="section-title theory">✍️ أسئلة نظرية</div>
+        <ul class="q-list">
+          <li class="q-item"><div class="q-header"><span class="q-num">1</span><span class="q-text">ما المقصود بعلاقة "is a" في الوراثة؟ أعطِ 3 أمثلة.</span></div></li>
+          <li class="q-item"><div class="q-header"><span class="q-num">2</span><span class="q-text">ما دور الكلمة المفتاحية <code>super</code> في الوراثة؟ اذكر استخدامين لها.</span></div></li>
+          <li class="q-item"><div class="q-header"><span class="q-num">3</span><span class="q-text">ما الفرق بين Method Overriding وMethod Overloading؟</span></div></li>
+          <li class="q-item"><div class="q-header"><span class="q-num">4</span><span class="q-text">ما الفرق بين private وprotected من حيث الوصول في الوراثة؟</span></div></li>
+          <li class="q-item"><div class="q-header"><span class="q-num">5</span><span class="q-text">ما تأثير الكلمة المفتاحية <code>final</code> على الـ method؟</span></div></li>
+        </ul>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <div class="section-title mcq">✅ أسئلة MCQ</div>
+
+        <div class="mcq-item">
+          <div class="mcq-q">1. الكلمة المفتاحية لتعريف الوراثة في Java هي؟</div>
+          <div class="mcq-options">
+            <div class="mcq-opt">inherits</div>
+            <div class="mcq-opt">implements</div>
+            <div class="mcq-opt correct">extends</div>
+            <div class="mcq-opt">derives</div>
+          </div>
+          <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+          <div class="mcq-answer">✅ الإجابة: extends — مثال: public class Employee extends Person</div>
+        </div>
+
+        <div class="mcq-item">
+          <div class="mcq-q">2. الـ private members في الـ Superclass؟</div>
+          <div class="mcq-options">
+            <div class="mcq-opt">لا تُوجد في الـ Subclass</div>
+            <div class="mcq-opt correct">موجودة لكن لا يمكن الوصول إليها مباشرةً</div>
+            <div class="mcq-opt">تصبح public في الـ Subclass</div>
+            <div class="mcq-opt">تُحذف عند الوراثة</div>
+          </div>
+          <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+          <div class="mcq-answer">✅ الإجابة: موجودة في الذاكرة لكن يُوصل إليها عبر public methods فقط</div>
+        </div>
+
+        <div class="mcq-item">
+          <div class="mcq-q">3. أين يجب أن تظهر جملة <code>super()</code> في الـ Subclass constructor؟</div>
+          <div class="mcq-options">
+            <div class="mcq-opt">في أي مكان</div>
+            <div class="mcq-opt">في النهاية</div>
+            <div class="mcq-opt correct">السطر الأول</div>
+            <div class="mcq-opt">قبل الـ return</div>
+          </div>
+          <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+          <div class="mcq-answer">✅ الإجابة: السطر الأول — لازم تكون أول statement في الـ constructor</div>
+        </div>
+
+        <div class="mcq-item">
+          <div class="mcq-q">4. لمنع الـ Subclass من override الـ method، نستخدم؟</div>
+          <div class="mcq-options">
+            <div class="mcq-opt">static</div>
+            <div class="mcq-opt">private</div>
+            <div class="mcq-opt correct">final</div>
+            <div class="mcq-opt">abstract</div>
+          </div>
+          <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+          <div class="mcq-answer">✅ الإجابة: final — public final void message() لا يمكن override-ها</div>
+        </div>
+
+        <div class="mcq-item">
+          <div class="mcq-q">5. الـ protected member يمكن الوصول إليه من؟</div>
+          <div class="mcq-options">
+            <div class="mcq-opt">نفس الـ class فقط</div>
+            <div class="mcq-opt">أي مكان في البرنامج</div>
+            <div class="mcq-opt correct">نفس الـ class + الـ subclasses + نفس الـ package</div>
+            <div class="mcq-opt">الـ subclasses فقط</div>
+          </div>
+          <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+          <div class="mcq-answer">✅ الإجابة: نفس الـ class والـ subclasses وكل classes في نفس الـ package</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <div class="section-title code-q">💻 أسئلة كتابة كود</div>
+        <div class="code-q-item">
+          <div class="cq-text">🔹 اكتب هيكل وراثة: Shape (superclass) → Rectangle و Circle (subclasses). Shape فيها color وـ method getArea(). كل subclass تُعيد كتابة getArea().</div>
+          <button class="toggle-solution" onclick="toggleSolution(this)">🔓 عرض الحل</button>
+          <div class="solution">
+            <div class="code-block">
+              <div class="code-header"><span class="code-lang">Java - Solution</span></div>
+              <pre><span class="kw">public class</span> <span class="cls">Shape</span> {
+    <span class="kw">protected</span> <span class="type">String</span> color;
+    <span class="kw">public</span> <span class="cls">Shape</span>(<span class="type">String</span> c) { color = c; }
+    <span class="kw">public double</span> <span class="method">getArea</span>() { <span class="kw">return</span> <span class="num">0</span>; }
+    <span class="kw">public void</span> <span class="method">display</span>() {
+        System.out.<span class="method">println</span>(<span class="str">"Color: "</span> + color + <span class="str">" | Area: "</span> + <span class="method">getArea</span>());
+    }
+}
+
+<span class="kw">public class</span> <span class="cls">Rectangle</span> <span class="kw">extends</span> <span class="cls">Shape</span> {
+    <span class="kw">private</span> <span class="type">double</span> length, width;
+    <span class="kw">public</span> <span class="cls">Rectangle</span>(<span class="type">String</span> c, <span class="type">double</span> l, <span class="type">double</span> w) {
+        <span class="kw">super</span>(c); length = l; width = w;
+    }
+    @Override
+    <span class="kw">public double</span> <span class="method">getArea</span>() { <span class="kw">return</span> length * width; }
+}
+
+<span class="kw">public class</span> <span class="cls">Circle</span> <span class="kw">extends</span> <span class="cls">Shape</span> {
+    <span class="kw">private</span> <span class="type">double</span> radius;
+    <span class="kw">public</span> <span class="cls">Circle</span>(<span class="type">String</span> c, <span class="type">double</span> r) {
+        <span class="kw">super</span>(c); radius = r;
+    }
+    @Override
+    <span class="kw">public double</span> <span class="method">getArea</span>() { <span class="kw">return</span> Math.PI * radius * radius; }
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- LECTURE 5 -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="lecture" id="lec5">
+    <div class="lecture-header l5">
+      <div class="lec-num">05</div>
+      <div class="lec-title">
+        <h2>Abstract Classes & Interfaces & Polymorphism</h2>
+        <p>abstract • interface • implements • Polymorphism</p>
+      </div>
+    </div>
+    <div class="lecture-body">
+
+      <div class="section">
+        <div class="section-title explain">📖 الشرح</div>
+        <div class="explain-card">
+          <h4>Abstract Class</h4>
+          <ul>
+            <li>لا يمكن إنشاء Object منها مباشرةً</li>
+            <li>بتكون Superclass لـ classes أخرى</li>
+            <li>ممكن تحتوي على abstract methods (بدون body) وعادية</li>
+            <li>الـ Subclass لازم تُنفذ كل الـ abstract methods</li>
+          </ul>
+        </div>
+        <div class="explain-card">
+          <h4>Interface</h4>
+          <ul>
+            <li>زي abstract class لكن كل methods فيها abstract</li>
+            <li>الـ fields فيها تلقائياً <code>public static final</code></li>
+            <li>الـ class ممكن تُنفذ (implements) أكتر من interface</li>
+            <li>الكلمة المفتاحية: <code>implements</code></li>
+          </ul>
+        </div>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Java - Abstract Class</span></div>
+          <pre><span class="kw">public abstract class</span> <span class="cls">Animal</span> {
+    <span class="kw">protected</span> <span class="type">String</span> name;
+
+    <span class="kw">public</span> <span class="cls">Animal</span>(<span class="type">String</span> n) { name = n; }
+
+    <span class="cmt">// Abstract method — لازم يتنفذ في الـ subclass</span>
+    <span class="kw">public abstract void</span> <span class="method">makeSound</span>();
+
+    <span class="cmt">// عادي method</span>
+    <span class="kw">public void</span> <span class="method">display</span>() {
+        System.out.<span class="method">println</span>(<span class="str">"Animal: "</span> + name);
+    }
+}
+
+<span class="kw">public class</span> <span class="cls">Dog</span> <span class="kw">extends</span> <span class="cls">Animal</span> {
+    <span class="kw">public</span> <span class="cls">Dog</span>(<span class="type">String</span> n) { <span class="kw">super</span>(n); }
+
+    @Override
+    <span class="kw">public void</span> <span class="method">makeSound</span>() { System.out.<span class="method">println</span>(<span class="str">"Woof!"</span>); }
+}
+
+<span class="kw">public class</span> <span class="cls">Cat</span> <span class="kw">extends</span> <span class="cls">Animal</span> {
+    <span class="kw">public</span> <span class="cls">Cat</span>(<span class="type">String</span> n) { <span class="kw">super</span>(n); }
+
+    @Override
+    <span class="kw">public void</span> <span class="method">makeSound</span>() { System.out.<span class="method">println</span>(<span class="str">"Meow!"</span>); }
+}</pre>
+        </div>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Java - Interface & Multiple Implementation</span></div>
+          <pre><span class="kw">public interface</span> <span class="cls">Printable</span> {
+    <span class="kw">void</span> <span class="method">print</span>();
+}
+
+<span class="kw">public interface</span> <span class="cls">Saveable</span> {
+    <span class="kw">void</span> <span class="method">save</span>();
+}
+
+<span class="cmt">// تنفيذ أكتر من interface</span>
+<span class="kw">public class</span> <span class="cls">Document</span> <span class="kw">implements</span> <span class="cls">Printable</span>, <span class="cls">Saveable</span> {
+    <span class="kw">private</span> <span class="type">String</span> content;
+
+    @Override
+    <span class="kw">public void</span> <span class="method">print</span>() { System.out.<span class="method">println</span>(<span class="str">"Printing: "</span> + content); }
+
+    @Override
+    <span class="kw">public void</span> <span class="method">save</span>()  { System.out.<span class="method">println</span>(<span class="str">"Saving: "</span> + content); }
+}</pre>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <div class="section-title theory">✍️ أسئلة نظرية</div>
+        <ul class="q-list">
+          <li class="q-item"><div class="q-header"><span class="q-num">1</span><span class="q-text">ما المقصود بـ Abstract Class؟ ولماذا لا يمكن إنشاء Object منها مباشرةً؟</span></div></li>
+          <li class="q-item"><div class="q-header"><span class="q-num">2</span><span class="q-text">ما الفرق بين الـ Abstract Class والـ Interface؟ متى تستخدم كل منهما؟</span></div></li>
+          <li class="q-item"><div class="q-header"><span class="q-num">3</span><span class="q-text">لماذا تسمح Java بتنفيذ أكتر من Interface ولكن لا تسمح بالوراثة من أكتر من class؟</span></div></li>
+          <li class="q-item"><div class="q-header"><span class="q-num">4</span><span class="q-text">ما هو Polymorphism؟ وكيف يتحقق في Java؟ أعطِ مثالاً.</span></div></li>
+        </ul>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <div class="section-title mcq">✅ أسئلة MCQ</div>
+
+        <div class="mcq-item">
+          <div class="mcq-q">1. ما الكلمة المفتاحية لتنفيذ Interface في Java؟</div>
+          <div class="mcq-options">
+            <div class="mcq-opt">extends</div>
+            <div class="mcq-opt correct">implements</div>
+            <div class="mcq-opt">inherits</div>
+            <div class="mcq-opt">uses</div>
+          </div>
+          <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+          <div class="mcq-answer">✅ الإجابة: implements — مثال: public class Dog implements Animal</div>
+        </div>
+
+        <div class="mcq-item">
+          <div class="mcq-q">2. الـ fields في Interface تكون تلقائياً؟</div>
+          <div class="mcq-options">
+            <div class="mcq-opt">private instance fields</div>
+            <div class="mcq-opt correct">public static final</div>
+            <div class="mcq-opt">protected fields</div>
+            <div class="mcq-opt">abstract fields</div>
+          </div>
+          <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+          <div class="mcq-answer">✅ الإجابة: public static final — أي field في interface يكون constant تلقائياً</div>
+        </div>
+
+        <div class="mcq-item">
+          <div class="mcq-q">3. إذا لم تُنفذ الـ Subclass الـ abstract method، ماذا يحدث؟</div>
+          <div class="mcq-options">
+            <div class="mcq-opt">تُنفذ تلقائياً</div>
+            <div class="mcq-opt correct">Compiler Error</div>
+            <div class="mcq-opt">Runtime Error</div>
+            <div class="mcq-opt">Warning فقط</div>
+          </div>
+          <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+          <div class="mcq-answer">✅ الإجابة: Compiler Error — لازم تُنفذ كل abstract methods وإلا لازم الـ class تبقى abstract هي كمان</div>
+        </div>
+
+        <div class="mcq-item">
+          <div class="mcq-q">4. أي class يمكن تنفيذ عدد غير محدود من؟</div>
+          <div class="mcq-options">
+            <div class="mcq-opt">Abstract Classes</div>
+            <div class="mcq-opt">Superclasses</div>
+            <div class="mcq-opt correct">Interfaces</div>
+            <div class="mcq-opt">Subclasses</div>
+          </div>
+          <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+          <div class="mcq-answer">✅ الإجابة: Interfaces — Java تسمح بتنفيذ عدد غير محدود من interfaces</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <div class="section-title code-q">💻 أسئلة كتابة كود</div>
+        <div class="code-q-item">
+          <div class="cq-text">🔹 اكتب interface اسمه Shape فيه method getArea() وgetPerimeter(). ثم class Rectangle وCircle ينفذوا هذا الـ Interface.</div>
+          <button class="toggle-solution" onclick="toggleSolution(this)">🔓 عرض الحل</button>
+          <div class="solution">
+            <div class="code-block">
+              <div class="code-header"><span class="code-lang">Java - Solution</span></div>
+              <pre><span class="kw">public interface</span> <span class="cls">Shape</span> {
+    <span class="type">double</span> <span class="method">getArea</span>();
+    <span class="type">double</span> <span class="method">getPerimeter</span>();
+}
+
+<span class="kw">public class</span> <span class="cls">Rectangle</span> <span class="kw">implements</span> <span class="cls">Shape</span> {
+    <span class="kw">private</span> <span class="type">double</span> length, width;
+    <span class="kw">public</span> <span class="cls">Rectangle</span>(<span class="type">double</span> l, <span class="type">double</span> w) { length = l; width = w; }
+    @Override <span class="kw">public double</span> <span class="method">getArea</span>()      { <span class="kw">return</span> length * width; }
+    @Override <span class="kw">public double</span> <span class="method">getPerimeter</span>() { <span class="kw">return</span> <span class="num">2</span> * (length + width); }
+}
+
+<span class="kw">public class</span> <span class="cls">Circle</span> <span class="kw">implements</span> <span class="cls">Shape</span> {
+    <span class="kw">private</span> <span class="type">double</span> radius;
+    <span class="kw">public</span> <span class="cls">Circle</span>(<span class="type">double</span> r) { radius = r; }
+    @Override <span class="kw">public double</span> <span class="method">getArea</span>()      { <span class="kw">return</span> Math.PI * radius * radius; }
+    @Override <span class="kw">public double</span> <span class="method">getPerimeter</span>() { <span class="kw">return</span> <span class="num">2</span> * Math.PI * radius; }
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- LECTURE 6 -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="lecture" id="lec6">
+    <div class="lecture-header l6">
+      <div class="lec-num">06</div>
+      <div class="lec-title">
+        <h2>Enumerations & Exception Handling</h2>
+        <p>enum • try-catch-finally • throw • Exception Hierarchy</p>
+      </div>
+    </div>
+    <div class="lecture-body">
+
+      <div class="section">
+        <div class="section-title explain">📖 الشرح</div>
+        <div class="explain-card">
+          <h4>Enumerated Types (enum)</h4>
+          <p>النوع المُعدَّد — بتحدد مجموعة من القيم الثابتة المسموح بها</p>
+          <ul>
+            <li><code>enum Day { SUNDAY, MONDAY, ... SATURDAY }</code></li>
+            <li>كل قيمة هي object من نوع الـ enum</li>
+            <li>مفيد لتمثيل حالات محددة: الأيام، الألوان، الفصول</li>
+          </ul>
+        </div>
+        <div class="explain-card">
+          <h4>Exception Handling</h4>
+          <ul>
+            <li>🚨 Exception = خطأ يحدث أثناء التشغيل</li>
+            <li><code>try</code>: الكود اللي ممكن يعمل exception</li>
+            <li><code>catch</code>: بنتعامل مع الـ exception هنا</li>
+            <li><code>finally</code>: بيتنفذ دايماً سواء حصل exception أو لأ</li>
+            <li><code>throw</code>: بترمي exception يدوياً</li>
+          </ul>
+        </div>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Java - Enum</span></div>
+          <pre><span class="kw">enum</span> <span class="cls">Day</span> { SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY }
+
+<span class="cls">Day</span> today = <span class="cls">Day</span>.WEDNESDAY;
+System.out.<span class="method">println</span>(today);              <span class="cmt">// WEDNESDAY</span>
+System.out.<span class="method">println</span>(today.<span class="method">ordinal</span>());   <span class="cmt">// 3 (zero-based)</span>
+System.out.<span class="method">println</span>(today.<span class="method">toString</span>()); <span class="cmt">// WEDNESDAY</span></pre>
+        </div>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Java - Exception Handling</span></div>
+          <pre><span class="kw">public static void</span> <span class="method">main</span>(<span class="type">String</span>[] args) {
+    Scanner sc = <span class="kw">new</span> <span class="cls">Scanner</span>(System.in);
+    <span class="kw">try</span> {
+        System.out.<span class="method">print</span>(<span class="str">"Enter a number: "</span>);
+        <span class="type">int</span> x = sc.<span class="method">nextInt</span>();
+
+        <span class="kw">if</span> (x == <span class="num">0</span>)
+            <span class="kw">throw new</span> <span class="cls">IllegalArgumentException</span>(<span class="str">"Zero not allowed!"</span>);
+
+        System.out.<span class="method">println</span>(<span class="str">"100 / "</span> + x + <span class="str">" = "</span> + (<span class="num">100</span> / x));
+    }
+    <span class="kw">catch</span> (<span class="cls">ArithmeticException</span> e) {
+        System.out.<span class="method">println</span>(<span class="str">"Math Error: "</span> + e.<span class="method">getMessage</span>());
+    }
+    <span class="kw">catch</span> (<span class="cls">IllegalArgumentException</span> e) {
+        System.out.<span class="method">println</span>(<span class="str">"Invalid Input: "</span> + e.<span class="method">getMessage</span>());
+    }
+    <span class="kw">catch</span> (<span class="cls">InputMismatchException</span> e) {
+        System.out.<span class="method">println</span>(<span class="str">"Enter numbers only!"</span>);
+    }
+    <span class="kw">finally</span> {
+        System.out.<span class="method">println</span>(<span class="str">"Program finished."</span>); <span class="cmt">// دايماً بيتنفذ</span>
+    }
+}</pre>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <div class="section-title theory">✍️ أسئلة نظرية</div>
+        <ul class="q-list">
+          <li class="q-item"><div class="q-header"><span class="q-num">1</span><span class="q-text">ما هو الـ enum في Java؟ ولماذا نستخدمه بدلاً من الـ constants العادية؟</span></div></li>
+          <li class="q-item"><div class="q-header"><span class="q-num">2</span><span class="q-text">ما الفرق بين الـ Error والـ Exception في Java؟</span></div></li>
+          <li class="q-item"><div class="q-header"><span class="q-num">3</span><span class="q-text">اشرح هيكل try-catch-finally مع ذكر متى يتنفذ كل قسم.</span></div></li>
+          <li class="q-item"><div class="q-header"><span class="q-num">4</span><span class="q-text">ما الفرق بين throw وthrows في Java؟</span></div></li>
+          <li class="q-item"><div class="q-header"><span class="q-num">5</span><span class="q-text">لماذا يجب ترتيب الـ catch clauses من الأكثر تحديداً للأكثر عمومية؟</span></div></li>
+        </ul>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <div class="section-title mcq">✅ أسئلة MCQ</div>
+
+        <div class="mcq-item">
+          <div class="mcq-q">1. الـ finally block بيتنفذ؟</div>
+          <div class="mcq-options">
+            <div class="mcq-opt">لما يحصل exception فقط</div>
+            <div class="mcq-opt">لما ما يحصلش exception فقط</div>
+            <div class="mcq-opt correct">دايماً في كل الحالات</div>
+            <div class="mcq-opt">بيعتمد على الـ exception نوعه</div>
+          </div>
+          <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+          <div class="mcq-answer">✅ الإجابة: دايماً — سواء حصل exception أو لأ</div>
+        </div>
+
+        <div class="mcq-item">
+          <div class="mcq-q">2. لرمي exception يدوياً في Java نستخدم؟</div>
+          <div class="mcq-options">
+            <div class="mcq-opt">throws</div>
+            <div class="mcq-opt correct">throw</div>
+            <div class="mcq-opt">raise</div>
+            <div class="mcq-opt">error</div>
+          </div>
+          <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+          <div class="mcq-answer">✅ الإجابة: throw — مثال: throw new IllegalArgumentException("Error");</div>
+        </div>
+
+        <div class="mcq-item">
+          <div class="mcq-q">3. أي من التالي في قمة هرم الـ Exceptions في Java؟</div>
+          <div class="mcq-options">
+            <div class="mcq-opt">Exception</div>
+            <div class="mcq-opt">Error</div>
+            <div class="mcq-opt correct">Throwable</div>
+            <div class="mcq-opt">RuntimeException</div>
+          </div>
+          <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+          <div class="mcq-answer">✅ الإجابة: Throwable — ومنه يرث Error و Exception</div>
+        </div>
+
+        <div class="mcq-item">
+          <div class="mcq-q">4. ما نتيجة قسمة عدد على صفر في Java (integers)؟</div>
+          <div class="mcq-options">
+            <div class="mcq-opt">تُرجع Infinity</div>
+            <div class="mcq-opt">تُرجع NaN</div>
+            <div class="mcq-opt correct">ArithmeticException</div>
+            <div class="mcq-opt">Compiler Error</div>
+          </div>
+          <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+          <div class="mcq-answer">✅ الإجابة: ArithmeticException — "/ by zero"</div>
+        </div>
+
+        <div class="mcq-item">
+          <div class="mcq-q">5. الـ enum في Java هي في الحقيقة؟</div>
+          <div class="mcq-options">
+            <div class="mcq-opt">Array من Strings</div>
+            <div class="mcq-opt">Interface</div>
+            <div class="mcq-opt correct">Specialized Class</div>
+            <div class="mcq-opt">Primitive Type</div>
+          </div>
+          <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+          <div class="mcq-answer">✅ الإجابة: Specialized Class — كل قيمة في الـ enum هي object من نوعها</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <div class="section-title code-q">💻 أسئلة كتابة كود</div>
+        <div class="code-q-item">
+          <div class="cq-text">🔹 اكتب برنامج يطلب من المستخدم إدخال عمره، وإذا كان أقل من صفر أو أكتر من 150 يرمي IllegalArgumentException. استخدم try-catch-finally.</div>
+          <button class="toggle-solution" onclick="toggleSolution(this)">🔓 عرض الحل</button>
+          <div class="solution">
+            <div class="code-block">
+              <div class="code-header"><span class="code-lang">Java - Solution</span></div>
+              <pre><span class="kw">import</span> java.util.Scanner;
+<span class="kw">import</span> java.util.InputMismatchException;
+
+<span class="kw">public class</span> <span class="cls">AgeValidator</span> {
+    <span class="kw">public static void</span> <span class="method">main</span>(<span class="type">String</span>[] args) {
+        Scanner sc = <span class="kw">new</span> <span class="cls">Scanner</span>(System.in);
+        <span class="kw">try</span> {
+            System.out.<span class="method">print</span>(<span class="str">"Enter your age: "</span>);
+            <span class="type">int</span> age = sc.<span class="method">nextInt</span>();
+
+            <span class="kw">if</span> (age < <span class="num">0</span> || age > <span class="num">150</span>)
+                <span class="kw">throw new</span> <span class="cls">IllegalArgumentException</span>(
+                    <span class="str">"Age must be between 0 and 150!"</span>);
+
+            System.out.<span class="method">println</span>(<span class="str">"Valid age: "</span> + age);
+        }
+        <span class="kw">catch</span> (<span class="cls">IllegalArgumentException</span> e) {
+            System.out.<span class="method">println</span>(<span class="str">"Error: "</span> + e.<span class="method">getMessage</span>());
+        }
+        <span class="kw">catch</span> (<span class="cls">InputMismatchException</span> e) {
+            System.out.<span class="method">println</span>(<span class="str">"Please enter a valid integer!"</span>);
+        }
+        <span class="kw">finally</span> {
+            System.out.<span class="method">println</span>(<span class="str">"Validation complete."</span>);
+            sc.<span class="method">close</span>();
+        }
+    }
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- LECTURE 7 -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="lecture" id="lec7">
+    <div class="lecture-header l7">
+      <div class="lec-num">07</div>
+      <div class="lec-title">
+        <h2>ArrayList</h2>
+        <p>add • remove • get • set • size • Dynamic Arrays</p>
+      </div>
+    </div>
+    <div class="lecture-body">
+
+      <div class="section">
+        <div class="section-title explain">📖 الشرح</div>
+        <div class="explain-card">
+          <h4>ما هو ArrayList؟</h4>
+          <ul>
+            <li>مثل الـ Array لكن حجمه بيتغير تلقائياً</li>
+            <li>بيكبر لما تضيف عناصر ويصغر لما تحذف</li>
+            <li>يحتاج: <code>import java.util.ArrayList;</code></li>
+            <li>الـ default capacity هو 10 عناصر</li>
+          </ul>
+        </div>
+        <div class="explain-card">
+          <h4>أهم Methods</h4>
+          <ul>
+            <li><code>add(element)</code> — يضيف في النهاية</li>
+            <li><code>add(index, element)</code> — يضيف في موضع معين</li>
+            <li><code>get(index)</code> — يجيب عنصر</li>
+            <li><code>set(index, element)</code> — يعدل عنصر</li>
+            <li><code>remove(index)</code> — يحذف عنصر</li>
+            <li><code>size()</code> — عدد العناصر</li>
+          </ul>
+        </div>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Java - ArrayList Complete Example</span></div>
+          <pre><span class="kw">import</span> java.util.ArrayList;
+
+<span class="cls">ArrayList</span>&lt;<span class="type">String</span>&gt; names = <span class="kw">new</span> <span class="cls">ArrayList</span>&lt;<span class="type">String</span>&gt;();
+
+<span class="cmt">// إضافة</span>
+names.<span class="method">add</span>(<span class="str">"Ahmed"</span>);
+names.<span class="method">add</span>(<span class="str">"Sara"</span>);
+names.<span class="method">add</span>(<span class="str">"Mohamed"</span>);
+names.<span class="method">add</span>(<span class="num">1</span>, <span class="str">"Nour"</span>); <span class="cmt">// يضيف في الـ index 1</span>
+
+<span class="cmt">// الحجم والقراءة</span>
+System.out.<span class="method">println</span>(<span class="str">"Size: "</span> + names.<span class="method">size</span>());   <span class="cmt">// 4</span>
+System.out.<span class="method">println</span>(names.<span class="method">get</span>(<span class="num">0</span>));            <span class="cmt">// Ahmed</span>
+System.out.<span class="method">println</span>(names);                   <span class="cmt">// [Ahmed, Nour, Sara, Mohamed]</span>
+
+<span class="cmt">// تعديل</span>
+names.<span class="method">set</span>(<span class="num">2</span>, <span class="str">"Fatma"</span>); <span class="cmt">// يعدل index 2</span>
+
+<span class="cmt">// حذف</span>
+names.<span class="method">remove</span>(<span class="num">0</span>); <span class="cmt">// يحذف الأول</span>
+
+<span class="cmt">// Loop عبر الـ ArrayList</span>
+<span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i < names.<span class="method">size</span>(); i++) {
+    System.out.<span class="method">println</span>(names.<span class="method">get</span>(i));
+}
+
+<span class="cmt">// أو بـ for-each</span>
+<span class="kw">for</span> (<span class="type">String</span> name : names) {
+    System.out.<span class="method">println</span>(name);
+}</pre>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <div class="section-title theory">✍️ أسئلة نظرية</div>
+        <ul class="q-list">
+          <li class="q-item"><div class="q-header"><span class="q-num">1</span><span class="q-text">ما الفرق الأساسي بين Array والـ ArrayList في Java؟</span></div></li>
+          <li class="q-item"><div class="q-header"><span class="q-num">2</span><span class="q-text">ما المقصود بـ Generics في ArrayList؟ لماذا نكتب &lt;String&gt; أو &lt;Integer&gt;؟</span></div></li>
+          <li class="q-item"><div class="q-header"><span class="q-num">3</span><span class="q-text">ما الفرق بين <code>add(element)</code> و <code>add(index, element)</code>؟</span></div></li>
+          <li class="q-item"><div class="q-header"><span class="q-num">4</span><span class="q-text">كيف يمكن تخزين Objects من نوع class معين في ArrayList؟</span></div></li>
+        </ul>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <div class="section-title mcq">✅ أسئلة MCQ</div>
+
+        <div class="mcq-item">
+          <div class="mcq-q">1. الـ default capacity للـ ArrayList هو؟</div>
+          <div class="mcq-options">
+            <div class="mcq-opt">5 عناصر</div>
+            <div class="mcq-opt correct">10 عناصر</div>
+            <div class="mcq-opt">100 عناصر</div>
+            <div class="mcq-opt">غير محدود</div>
+          </div>
+          <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+          <div class="mcq-answer">✅ الإجابة: 10 عناصر — لكنه بيكبر تلقائياً عند الحاجة</div>
+        </div>
+
+        <div class="mcq-item">
+          <div class="mcq-q">2. لإضافة عنصر في موضع معين في ArrayList نستخدم؟</div>
+          <div class="mcq-options">
+            <div class="mcq-opt">add(element)</div>
+            <div class="mcq-opt correct">add(index, element)</div>
+            <div class="mcq-opt">insert(index, element)</div>
+            <div class="mcq-opt">set(element)</div>
+          </div>
+          <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+          <div class="mcq-answer">✅ الإجابة: add(index, element) — يضيف في الـ index المحدد ويزحزح باقي العناصر</div>
+        </div>
+
+        <div class="mcq-item">
+          <div class="mcq-q">3. لتعديل عنصر في ArrayList نستخدم؟</div>
+          <div class="mcq-options">
+            <div class="mcq-opt">change(index, element)</div>
+            <div class="mcq-opt correct">set(index, element)</div>
+            <div class="mcq-opt">update(index, element)</div>
+            <div class="mcq-opt">replace(index, element)</div>
+          </div>
+          <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+          <div class="mcq-answer">✅ الإجابة: set(index, element) — يستبدل العنصر في الـ index المحدد</div>
+        </div>
+
+        <div class="mcq-item">
+          <div class="mcq-q">4. أي import مطلوب لاستخدام ArrayList؟</div>
+          <div class="mcq-options">
+            <div class="mcq-opt">import java.lang.ArrayList;</div>
+            <div class="mcq-opt correct">import java.util.ArrayList;</div>
+            <div class="mcq-opt">import java.io.ArrayList;</div>
+            <div class="mcq-opt">لا يحتاج import</div>
+          </div>
+          <button class="show-answer-btn" onclick="toggleAnswer(this)">إظهار الإجابة</button>
+          <div class="mcq-answer">✅ الإجابة: import java.util.ArrayList;</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <div class="section-title code-q">💻 أسئلة كتابة كود</div>
+        <div class="code-q-item">
+          <div class="cq-text">🔹 اكتب برنامج يُنشئ ArrayList من Student objects، يضيف 3 طلاب، يطبع الكل، ثم يحذف الطالب الثاني ويطبع مرة ثانية.</div>
+          <button class="toggle-solution" onclick="toggleSolution(this)">🔓 عرض الحل</button>
+          <div class="solution">
+            <div class="code-block">
+              <div class="code-header"><span class="code-lang">Java - Solution</span></div>
+              <pre><span class="kw">import</span> java.util.ArrayList;
+
+<span class="kw">public class</span> <span class="cls">Main</span> {
+    <span class="kw">public static void</span> <span class="method">main</span>(<span class="type">String</span>[] args) {
+        <span class="cls">ArrayList</span>&lt;<span class="cls">Student</span>&gt; students = <span class="kw">new</span> <span class="cls">ArrayList</span>&lt;&gt;();
+
+        students.<span class="method">add</span>(<span class="kw">new</span> <span class="cls">Student</span>(<span class="str">"Ahmed"</span>,   <span class="num">1001</span>, <span class="num">3.8</span>));
+        students.<span class="method">add</span>(<span class="kw">new</span> <span class="cls">Student</span>(<span class="str">"Sara"</span>,    <span class="num">1002</span>, <span class="num">3.5</span>));
+        students.<span class="method">add</span>(<span class="kw">new</span> <span class="cls">Student</span>(<span class="str">"Mohamed"</span>, <span class="num">1003</span>, <span class="num">3.9</span>));
+
+        System.out.<span class="method">println</span>(<span class="str">"--- All Students ---"</span>);
+        <span class="kw">for</span> (<span class="cls">Student</span> s : students) s.<span class="method">print</span>();
+
+        students.<span class="method">remove</span>(<span class="num">1</span>); <span class="cmt">// حذف Sara</span>
+
+        System.out.<span class="method">println</span>(<span class="str">"\n--- After Removal ---"</span>);
+        <span class="kw">for</span> (<span class="cls">Student</span> s : students) s.<span class="method">print</span>();
+    }
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- FINAL COMPREHENSIVE CODE -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="final-section" id="final">
+    <div class="final-header">
+      <h2>🏆 الكود الشامل للمنهج كله</h2>
+      <p>مشروع متكامل يجمع جميع مفاهيم OOP في Java في مكان واحد</p>
+    </div>
+    <div class="final-body">
+
+      <div class="explain-card" style="margin-bottom:20px;">
+        <h4>📌 ما الذي يغطيه هذا الكود؟</h4>
+        <ul>
+          <li>✅ Classes & Objects مع Encapsulation</li>
+          <li>✅ Constructors (No-arg, Parameterized, Copy) + Static</li>
+          <li>✅ Inheritance (Person → Employee → Manager)</li>
+          <li>✅ Abstract Class & Interface</li>
+          <li>✅ Method Overriding & Polymorphism</li>
+          <li>✅ Enum</li>
+          <li>✅ Exception Handling</li>
+          <li>✅ ArrayList</li>
+        </ul>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">Java - 1. Enums & Interfaces</span></div>
+        <pre><span class="cmt">// ══════════════════════════════════
+// 1. ENUM - نوع المنصب
+// ══════════════════════════════════</span>
+<span class="kw">enum</span> <span class="cls">Department</span> { HR, IT, FINANCE, MARKETING, OPERATIONS }
+
+<span class="cmt">// ══════════════════════════════════
+// 2. INTERFACE - سلوك مشترك
+// ══════════════════════════════════</span>
+<span class="kw">public interface</span> <span class="cls">Payable</span> {
+    <span class="type">double</span> <span class="method">calculatePay</span>();   <span class="cmt">// كل موظف يحسب راتبه بطريقته</span>
+    <span class="type">void</span>   <span class="method">printPaySlip</span>();   <span class="cmt">// طباعة كشف المرتب</span>
+}
+
+<span class="kw">public interface</span> <span class="cls">Reviewable</span> {
+    <span class="type">void</span> <span class="method">performanceReview</span>(<span class="type">double</span> rating);
+}</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">Java - 2. Abstract Class</span></div>
+        <pre><span class="cmt">// ══════════════════════════════════
+// 3. ABSTRACT CLASS - الشخص (Base)
+// ══════════════════════════════════</span>
+<span class="kw">public abstract class</span> <span class="cls">Person</span> {
+    <span class="kw">private</span> <span class="type">String</span> name;
+    <span class="kw">private</span> <span class="type">int</span>    age;
+    <span class="kw">private static int</span> personCount = <span class="num">0</span>; <span class="cmt">// Static — مشترك</span>
+
+    <span class="cmt">// No-arg constructor</span>
+    <span class="kw">public</span> <span class="cls">Person</span>() {
+        name = <span class="str">"Unknown"</span>;
+        age  = <span class="num">0</span>;
+        personCount++;
+    }
+
+    <span class="cmt">// Parameterized constructor</span>
+    <span class="kw">public</span> <span class="cls">Person</span>(<span class="type">String</span> name, <span class="type">int</span> age) {
+        <span class="kw">this</span>.name = name;
+        <span class="kw">this</span>.age  = age;
+        personCount++;
+    }
+
+    <span class="cmt">// Copy constructor</span>
+    <span class="kw">public</span> <span class="cls">Person</span>(<span class="cls">Person</span> other) {
+        <span class="kw">this</span>.name = other.name;
+        <span class="kw">this</span>.age  = other.age;
+        personCount++;
+    }
+
+    <span class="cmt">// Getters & Setters</span>
+    <span class="kw">public String</span> <span class="method">getName</span>() { <span class="kw">return</span> name; }
+    <span class="kw">public int</span>    <span class="method">getAge</span>()  { <span class="kw">return</span> age; }
+    <span class="kw">public void</span>   <span class="method">setName</span>(<span class="type">String</span> n) { name = n; }
+    <span class="kw">public void</span>   <span class="method">setAge</span>(<span class="type">int</span> a) {
+        <span class="kw">if</span> (a >= <span class="num">0</span> && a <= <span class="num">120</span>) age = a;
+        <span class="kw">else</span> <span class="kw">throw new</span> <span class="cls">IllegalArgumentException</span>(<span class="str">"Invalid age!"</span>);
+    }
+
+    <span class="kw">public static int</span> <span class="method">getPersonCount</span>() { <span class="kw">return</span> personCount; }
+
+    <span class="cmt">// Abstract method — لازم ينفذها الـ subclass</span>
+    <span class="kw">public abstract void</span> <span class="method">displayInfo</span>();
+}</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">Java - 3. Employee (Subclass)</span></div>
+        <pre><span class="cmt">// ══════════════════════════════════
+// 4. EMPLOYEE - يرث Person وينفذ Payable
+// ══════════════════════════════════</span>
+<span class="kw">public class</span> <span class="cls">Employee</span> <span class="kw">extends</span> <span class="cls">Person</span> <span class="kw">implements</span> <span class="cls">Payable</span>, <span class="cls">Reviewable</span> {
+    <span class="kw">private</span> <span class="type">int</span>        employeeId;
+    <span class="kw">private</span> <span class="type">double</span>     basicSalary;
+    <span class="kw">private</span> <span class="cls">Department</span> dept;
+    <span class="kw">private</span> <span class="type">double</span>     performanceRating;
+
+    <span class="kw">public</span> <span class="cls">Employee</span>(<span class="type">String</span> name, <span class="type">int</span> age, <span class="type">int</span> id,
+                    <span class="type">double</span> salary, <span class="cls">Department</span> dept) {
+        <span class="kw">super</span>(name, age);  <span class="cmt">// نُنادي Person constructor</span>
+        <span class="kw">this</span>.employeeId  = id;
+        <span class="kw">this</span>.basicSalary = salary;
+        <span class="kw">this</span>.dept        = dept;
+        <span class="kw">this</span>.performanceRating = <span class="num">3.0</span>; <span class="cmt">// default</span>
+    }
+
+    <span class="cmt">// Implement Payable interface</span>
+    @Override
+    <span class="kw">public double</span> <span class="method">calculatePay</span>() {
+        <span class="kw">return</span> basicSalary + (basicSalary * <span class="num">0.1</span>); <span class="cmt">// أساسي + 10% علاوة</span>
+    }
+
+    @Override
+    <span class="kw">public void</span> <span class="method">printPaySlip</span>() {
+        System.out.<span class="method">println</span>(<span class="str">"=============================="</span>);
+        System.out.<span class="method">println</span>(<span class="str">"  PAY SLIP - "</span> + <span class="method">getName</span>());
+        System.out.<span class="method">println</span>(<span class="str">"  ID: "</span>       + employeeId);
+        System.out.<span class="method">println</span>(<span class="str">"  Dept: "</span>     + dept);
+        System.out.<span class="method">println</span>(<span class="str">"  Net Pay: "</span> + <span class="method">calculatePay</span>());
+        System.out.<span class="method">println</span>(<span class="str">"=============================="</span>);
+    }
+
+    <span class="cmt">// Implement Reviewable interface</span>
+    @Override
+    <span class="kw">public void</span> <span class="method">performanceReview</span>(<span class="type">double</span> rating) {
+        <span class="kw">if</span> (rating < <span class="num">1.0</span> || rating > <span class="num">5.0</span>)
+            <span class="kw">throw new</span> <span class="cls">IllegalArgumentException</span>(<span class="str">"Rating must be 1.0–5.0"</span>);
+        <span class="kw">this</span>.performanceRating = rating;
+        System.out.<span class="method">println</span>(<span class="method">getName</span>() + <span class="str">" rated: "</span> + rating);
+    }
+
+    <span class="cmt">// Override abstract method from Person</span>
+    @Override
+    <span class="kw">public void</span> <span class="method">displayInfo</span>() {
+        System.out.<span class="method">println</span>(<span class="str">"Employee | Name: "</span> + <span class="method">getName</span>() +
+                           <span class="str">" | Age: "</span> + <span class="method">getAge</span>() +
+                           <span class="str">" | Dept: "</span> + dept +
+                           <span class="str">" | Rating: "</span> + performanceRating);
+    }
+
+    <span class="kw">public double</span> <span class="method">getBasicSalary</span>() { <span class="kw">return</span> basicSalary; }
+}</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">Java - 4. Manager (Subclass of Employee)</span></div>
+        <pre><span class="cmt">// ══════════════════════════════════
+// 5. MANAGER - يرث Employee
+// ══════════════════════════════════</span>
+<span class="kw">public class</span> <span class="cls">Manager</span> <span class="kw">extends</span> <span class="cls">Employee</span> {
+    <span class="kw">private</span> <span class="type">double</span> bonus;
+    <span class="kw">private</span> <span class="cls">ArrayList</span>&lt;<span class="cls">Employee</span>&gt; team;
+
+    <span class="kw">public</span> <span class="cls">Manager</span>(<span class="type">String</span> name, <span class="type">int</span> age, <span class="type">int</span> id,
+                   <span class="type">double</span> salary, <span class="cls">Department</span> dept, <span class="type">double</span> bonus) {
+        <span class="kw">super</span>(name, age, id, salary, dept);
+        <span class="kw">this</span>.bonus = bonus;
+        <span class="kw">this</span>.team  = <span class="kw">new</span> <span class="cls">ArrayList</span>&lt;&gt;();
+    }
+
+    <span class="cmt">// Override calculatePay — يضيف الـ bonus</span>
+    @Override
+    <span class="kw">public double</span> <span class="method">calculatePay</span>() {
+        <span class="kw">return super</span>.<span class="method">calculatePay</span>() + bonus;
+    }
+
+    <span class="kw">public void</span> <span class="method">addToTeam</span>(<span class="cls">Employee</span> emp) {
+        team.<span class="method">add</span>(emp);
+        System.out.<span class="method">println</span>(emp.<span class="method">getName</span>() + <span class="str">" added to "</span> + <span class="method">getName</span>() + <span class="str">"'s team"</span>);
+    }
+
+    <span class="kw">public void</span> <span class="method">displayTeam</span>() {
+        System.out.<span class="method">println</span>(<span class="str">"\n--- Team of "</span> + <span class="method">getName</span>() + <span class="str">" ---"</span>);
+        <span class="kw">for</span> (<span class="cls">Employee</span> e : team) e.<span class="method">displayInfo</span>();
+    }
+
+    @Override
+    <span class="kw">public void</span> <span class="method">displayInfo</span>() {
+        System.out.<span class="method">println</span>(<span class="str">"MANAGER | "</span> + <span class="method">getName</span>() +
+                           <span class="str">" | Pay: "</span> + <span class="method">calculatePay</span>() +
+                           <span class="str">" | Team size: "</span> + team.<span class="method">size</span>());
+    }
+}</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">Java - 5. Main Program (الجمع الكامل)</span></div>
+        <pre><span class="kw">import</span> java.util.ArrayList;
+
+<span class="kw">public class</span> <span class="cls">CompanySystem</span> {
+
+    <span class="kw">public static void</span> <span class="method">main</span>(<span class="type">String</span>[] args) {
+
+        System.out.<span class="method">println</span>(<span class="str">"=== COMPANY HR SYSTEM ==="</span>);
+
+        <span class="cmt">// إنشاء employees</span>
+        <span class="cls">Employee</span> e1 = <span class="kw">new</span> <span class="cls">Employee</span>(<span class="str">"Ahmed Ali"</span>,    <span class="num">28</span>, <span class="num">1001</span>, <span class="num">8000</span>,  <span class="cls">Department</span>.IT);
+        <span class="cls">Employee</span> e2 = <span class="kw">new</span> <span class="cls">Employee</span>(<span class="str">"Sara Hassan"</span>,  <span class="num">32</span>, <span class="num">1002</span>, <span class="num">7500</span>,  <span class="cls">Department</span>.IT);
+        <span class="cls">Employee</span> e3 = <span class="kw">new</span> <span class="cls">Employee</span>(<span class="str">"Omar Khaled"</span>,  <span class="num">25</span>, <span class="num">1003</span>, <span class="num">6000</span>,  <span class="cls">Department</span>.HR);
+        <span class="cls">Manager</span>  m1 = <span class="kw">new</span> <span class="cls">Manager</span> (<span class="str">"Mona Samy"</span>,    <span class="num">40</span>, <span class="num">2001</span>, <span class="num">15000</span>, <span class="cls">Department</span>.IT,    <span class="num">3000</span>);
+        <span class="cls">Manager</span>  m2 = <span class="kw">new</span> <span class="cls">Manager</span> (<span class="str">"Tarek Mostafa"</span>, <span class="num">45</span>, <span class="num">2002</span>, <span class="num">18000</span>, <span class="cls">Department</span>.FINANCE, <span class="num">5000</span>);
+
+        <span class="cmt">// بناء الفرق</span>
+        m1.<span class="method">addToTeam</span>(e1);
+        m1.<span class="method">addToTeam</span>(e2);
+
+        <span class="cmt">// ArrayList لكل الموظفين</span>
+        <span class="cls">ArrayList</span>&lt;<span class="cls">Person</span>&gt; allPersons = <span class="kw">new</span> <span class="cls">ArrayList</span>&lt;&gt;();
+        allPersons.<span class="method">add</span>(e1); allPersons.<span class="method">add</span>(e2);
+        allPersons.<span class="method">add</span>(e3); allPersons.<span class="method">add</span>(m1); allPersons.<span class="method">add</span>(m2);
+
+        <span class="cmt">// Polymorphism — displayInfo() حسب نوع الـ object</span>
+        System.out.<span class="method">println</span>(<span class="str">"\n--- All Employees (Polymorphism) ---"</span>);
+        <span class="kw">for</span> (<span class="cls">Person</span> p : allPersons) {
+            p.<span class="method">displayInfo</span>(); <span class="cmt">// كل object بينفذ نسخته الخاصة</span>
+        }
+
+        <span class="cmt">// Pay Slips</span>
+        System.out.<span class="method">println</span>(<span class="str">"\n--- Pay Slips ---"</span>);
+        e1.<span class="method">printPaySlip</span>();
+        m1.<span class="method">printPaySlip</span>();
+
+        <span class="cmt">// Performance Review مع Exception Handling</span>
+        System.out.<span class="method">println</span>(<span class="str">"\n--- Performance Reviews ---"</span>);
+        <span class="kw">try</span> {
+            e1.<span class="method">performanceReview</span>(<span class="num">4.5</span>);
+            e2.<span class="method">performanceReview</span>(<span class="num">6.0</span>); <span class="cmt">// سيرمي Exception</span>
+        } <span class="kw">catch</span> (<span class="cls">IllegalArgumentException</span> ex) {
+            System.out.<span class="method">println</span>(<span class="str">"Review Error: "</span> + ex.<span class="method">getMessage</span>());
+        } <span class="kw">finally</span> {
+            System.out.<span class="method">println</span>(<span class="str">"Review process completed."</span>);
+        }
+
+        <span class="cmt">// Static field</span>
+        System.out.<span class="method">println</span>(<span class="str">"\nTotal persons created: "</span> + <span class="cls">Person</span>.<span class="method">getPersonCount</span>());
+
+        <span class="cmt">// Enum usage</span>
+        <span class="cls">Department</span> myDept = <span class="cls">Department</span>.IT;
+        System.out.<span class="method">println</span>(<span class="str">"Department: "</span> + myDept + <span class="str">" (ordinal: "</span> + myDept.<span class="method">ordinal</span>() + <span class="str">")"</span>);
+
+        <span class="cmt">// فريق المدير</span>
+        m1.<span class="method">displayTeam</span>();
+    }
+}</pre>
+      </div>
+
+      <div class="explain-card" style="margin-top:20px; background: rgba(126,231,135,0.05); border-color: rgba(126,231,135,0.3);">
+        <h4 style="color:#7ee787;">📊 الـ Output المتوقع</h4>
+        <div class="code-block" style="margin-top:10px;">
+          <div class="code-header"><span class="code-lang">Output</span></div>
+          <pre style="color:#7ee787; font-size:0.82rem;">=== COMPANY HR SYSTEM ===
+Ahmed Ali added to Mona Samy's team
+Sara Hassan added to Mona Samy's team
+
+--- All Employees (Polymorphism) ---
+Employee | Name: Ahmed Ali | Age: 28 | Dept: IT | Rating: 3.0
+Employee | Name: Sara Hassan | Age: 32 | Dept: IT | Rating: 3.0
+Employee | Name: Omar Khaled | Age: 25 | Dept: HR | Rating: 3.0
+MANAGER | Mona Samy | Pay: 19500.0 | Team size: 2
+MANAGER | Tarek Mostafa | Pay: 24800.0 | Team size: 0
+
+--- Pay Slips ---
+==============================
+  PAY SLIP - Ahmed Ali
+  ID: 1001
+  Dept: IT
+  Net Pay: 8800.0
+==============================
+...
+
+--- Performance Reviews ---
+Ahmed Ali rated: 4.5
+Review Error: Rating must be 1.0–5.0
+Review process completed.
+
+Total persons created: 5
+Department: IT (ordinal: 1)
+
+--- Team of Mona Samy ---
+Employee | Name: Ahmed Ali | ...
+Employee | Name: Sara Hassan | ...</pre>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>📚 شرح مادة Object Oriented Programming - Java | جميع الحقوق محفوظة</p>
+  <p style="margin-top:8px; font-size:0.8rem;">يغطي: OOP Concepts • Classes • Constructors • Inheritance • Abstract • Interfaces • Enum • Exceptions • ArrayList</p>
+</footer>
+
+<script>
+function toggleAnswer(btn) {
+  const answer = btn.nextElementSibling;
+  if (answer.style.display === 'block') {
+    answer.style.display = 'none';
+    btn.textContent = 'إظهار الإجابة';
+  } else {
+    answer.style.display = 'block';
+    btn.textContent = 'إخفاء الإجابة';
+  }
+}
+
+function toggleSolution(btn) {
+  const sol = btn.nextElementSibling;
+  if (sol.classList.contains('show')) {
+    sol.classList.remove('show');
+    btn.textContent = '🔓 عرض الحل';
+  } else {
+    sol.classList.add('show');
+    btn.textContent = '🔒 إخفاء الحل';
+  }
+}
+</script>
+
+</body>
+</html>
